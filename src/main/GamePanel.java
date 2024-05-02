@@ -1,6 +1,7 @@
 package main;
 
 import Entity.Player;
+import Tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +13,8 @@ public class GamePanel extends JPanel  implements Runnable{
 final int  originalTileSize = 16;//16x16 pixels marimea obiectelor
 final int scale = 3;//Este scara cu care marim jocul 16*3=48
   public  final int titlesize= originalTileSize*scale;//48X48  este marimea obiectelor
-    final int maxScreenCol = 16;//16 coloane
-    final  int maxScreenRow = 12;//12 randuri
+   public final int maxScreenCol = 16;//16 coloane
+   public final  int maxScreenRow = 12;//12 randuri
    public final int screenWidth= maxScreenCol*titlesize;//16*48=768 pixeli
    public final int screenHeight= maxScreenRow*titlesize;//12*48=576 pixeli
 
@@ -25,11 +26,9 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
 
     Player player = new Player(this,keyHandler);
-//Pozitionarea jucatoruli
-    int playerX = 100;
-    int playerY = 100;
-    int playerSped = 4;
-  public  JLabel label = new JLabel("Cordonate "+playerX+" "+playerY);
+    TileManager tm = new TileManager(this);
+
+  public  JLabel label = new JLabel();
 
     public GamePanel(){
         this.addKeyListener(keyHandler);
@@ -88,13 +87,10 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-
-        Graphics2D g2d2 = (Graphics2D) g;
         Graphics2D g2d = (Graphics2D) g;
-        g2d2.setColor(Color.RED);
-        g2d2.fillRect(200,200,titlesize,titlesize);//Deseneaza jucatorul
 
 
+        tm.draw(g2d);
         player.draw(g2d);
 
 

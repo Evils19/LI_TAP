@@ -63,17 +63,16 @@ public class Player  extends Entity{
         }
 
 
+        if (y<-56 && x<116 && x>20 ){
+            x=100;
+            y=100;
+        }
 
 
         gamePanel.label.setText("Cordonate "+x+" "+y);
        gamePanel.label.setForeground(Color.WHITE);
 
-        if (x==200 && y==192 || x==164 && y==196 || x==164 && y==228 ||
-                x==196 && y==232|| x==216 && y==232 || x==240 && y==232 || x==180 && y==200
-                || x==212 && y==200 || x==196 && y==196 || x==204 && y==220 ){
-            x=100;
-            y=100;
-        }
+
         if (x>gamePanel.screenWidth){
             x=0;
         }
@@ -125,7 +124,7 @@ public  void draw(Graphics2D g2d){
 
 
 
-    g2d.drawImage(image.getSubimage(0,0,180,180),x,y,gamePanel.titlesize*2,gamePanel.titlesize*2,null);
+    g2d.drawImage(image.getSubimage(0,0,180,180),x,y,gamePanel.titlesize*3/2,gamePanel.titlesize*3/2,null);
 
 
 
