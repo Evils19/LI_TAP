@@ -17,5 +17,8 @@ public BufferedImage objectImage;
     public Rectangle coliziune;
     public String direction="sus";
     public  boolean collision = false;
+    public  boolean ObjCollision = false;
+
+    public int  SolidDefaultX, SolidDefaultY;
 
 }

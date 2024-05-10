@@ -24,12 +24,15 @@ public class Player  extends Entity{
     //Poziția pe ecran a jucătorului
     public final  int screenX;
     public final  int screenY;
+    public  int NrChei=0;
     public Player(GamePanel gp, KeyHandler kh){
         gamePanel = gp;
         keyHandler = kh;
         screenX = gamePanel.screenWidth/2- gamePanel.titlesize/2;
         screenY = gamePanel.screenHeight/2- gamePanel.titlesize/2;
         coliziune= new Rectangle(16,16,25,25);
+        SolidDefaultX=coliziune.x;
+        SolidDefaultY=coliziune.y;
         setDefaultPosition();
         importImage();
     }
@@ -75,16 +78,84 @@ public class Player  extends Entity{
 
         collision =false;
         gamePanel.dc.ColiziuneBloc(this);
+        //Coloziune obiecte
+      int objIndex=  gamePanel.dc.ColoziuneObiect(this,true);
+      ObjectInteraction(objIndex);
         //Daca conditia de coliziune este falsa atunci jucatorul se poate misca
 
 
+        if (Worldx>=416 && Worldy<508 && Worldx <516){
+            gamePanel.label.setText("Comoara pierduta iarasi a gasit lumina zilei");
+            gamePanel.label.setForeground(Color.red);
+        }
+        else{
         gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
-       gamePanel.label.setForeground(Color.WHITE);
+        gamePanel.label2.setText("Nr Chei "+ NrChei);
+
+       gamePanel.label2.setForeground(Color.WHITE);
+
+
+
+        }
 
 
 
 
     }
+
+
+
+
+    public  void ObjectInteraction(int index){
+
+        if (index!=999){
+            switch (gamePanel.objects[index].name){
+                case "Key":
+                    NrChei++;
+                    gamePanel.objects[index].Worldx=0;
+                    gamePanel.objects[index].Worldy=0;
+                    gamePanel.label.setText("");
+                    break;
+                case "Door":
+                    if (NrChei>0){
+                        NrChei--;
+                        gamePanel.objects[index].Worldx=0;
+                        gamePanel.objects[index].Worldy=0;
+                    }
+                    else {
+                        gamePanel.label.setText("Nu ai cheie");
+                        gamePanel.label.setForeground(Color.red);
+                        collision=true;
+                    }
+                    break;
+                case "Сhest":
+                    gamePanel.objects[index].Worldx=0;
+
+                    break;
+                default:
+                    gamePanel.label.setText("");
+                    break;
+            }
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 public  void draw(Graphics2D g2d){
 

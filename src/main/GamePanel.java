@@ -1,6 +1,7 @@
 package main;
 
 import Entity.Player;
+import Obiecte.SuperObject;
 import Tile.TileManager;
 
 import javax.swing.*;
@@ -31,8 +32,13 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public  DetectorColision dc = new DetectorColision(this);
    public Player player = new Player(this,keyHandler);
     TileManager tm = new TileManager(this);
+  public   SetObject so = new SetObject(this);
+    public SuperObject[] objects = new SuperObject[10];
+
+
 
   public  JLabel label = new JLabel();
+  public  JLabel label2 = new JLabel();
 
     public GamePanel(){
         this.addKeyListener(keyHandler);
@@ -42,10 +48,15 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         this.setDoubleBuffered(true);//Dubleaza bufferul pentru a evita flickering-ul
         this.add(label);
 
+        this.add(label2);
+
 
 
     }
 
+    public  void  setupGame(){
+        so.SetObject();
+    }
 
     public  void startGameThread(){
         gamethread = new Thread(this);//Creaza un nou thread care primeste acesata clasa
@@ -100,9 +111,17 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         Graphics2D g2d = (Graphics2D) g;
         Graphics2D g2d2 = (Graphics2D) g;
 
-
+//Blocuri
         tm.draw(g2d);
+        //Obiecte
+        for (int i=0;i<objects.length;i++){
+            if (objects[i]!=null){
+                objects[i].draw(g2d,this);
+            }
+        }
+        //Jucator
         player.draw(g2d2);
+
 
 
     }

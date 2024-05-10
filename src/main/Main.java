@@ -16,6 +16,9 @@ window.pack();//Face fereastra sa fie de dimensiunea main.GamePanel
 
 window.setLocationRelativeTo(null);//Fixam fereastra in mijlocul ecranului
         window.setVisible(true);
+
+
+        gamePanel.setupGame();
         gamePanel.startGameThread();
 
 
