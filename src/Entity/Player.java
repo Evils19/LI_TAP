@@ -4,12 +4,12 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public class Player  extends Entity{
+
 
 
     GamePanel gamePanel;
@@ -21,9 +21,14 @@ public class Player  extends Entity{
     private int stangaIndex = 0;
     private int dreaptaIndex = 0;
 
+    //Poziția pe ecran a jucătorului
+    public final  int screenX;
+    public final  int screenY;
     public Player(GamePanel gp, KeyHandler kh){
         gamePanel = gp;
         keyHandler = kh;
+        screenX = gamePanel.screenWidth/2- gamePanel.titlesize/2;
+        screenY = gamePanel.screenHeight/2- gamePanel.titlesize/2;
         setDefaultPosition();
         importImage();
     }
@@ -37,54 +42,37 @@ public class Player  extends Entity{
     }
     }
     public  void setDefaultPosition(){
-        x=100;
-        y=100;
+        Worldx = gamePanel.titlesize*23;
+        Worldy =gamePanel.titlesize*21;
         speed=4;
     }
 
 
     public void update() {
         if (keyHandler.MiscareSus) {
-            y -= speed;
+            Worldy -= speed;
             direction = "sus";
             susIndex = (susIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru sus
         } else if (keyHandler.MiscareJos) {
-            y += speed;
+            Worldy += speed;
             direction = "jos";
             josIndex = (josIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru jos
         } else if (keyHandler.MiscareStanga) {
-            x -= speed;
+            Worldx -= speed;
             direction = "stanga";
             stangaIndex = (stangaIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru stânga
         } else if (keyHandler.MiscareDreapta) {
-            x += speed;
+            Worldx += speed;
             direction = "dreapta";
             dreaptaIndex = (dreaptaIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru dreapta
         }
 
 
-        if (y<-56 && x<116 && x>20 ){
-            x=100;
-            y=100;
-        }
 
 
-        gamePanel.label.setText("Cordonate "+x+" "+y);
+        gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
        gamePanel.label.setForeground(Color.WHITE);
 
-
-        if (x>gamePanel.screenWidth){
-            x=0;
-        }
-        if (y>gamePanel.screenHeight){
-            y=0;
-        }
-        if (x<-72){
-            x=gamePanel.screenWidth;
-        }
-        if (y<-72){
-            y=gamePanel.screenHeight;
-        }
 
 
 
@@ -124,7 +112,7 @@ public  void draw(Graphics2D g2d){
 
 
 
-    g2d.drawImage(image.getSubimage(0,0,180,180),x,y,gamePanel.titlesize*3/2,gamePanel.titlesize*3/2,null);
+    g2d.drawImage(image.getSubimage(0,0,180,180),screenX, screenY,gamePanel.titlesize*3/2,gamePanel.titlesize*3/2,null);
 
 
 

@@ -3,6 +3,7 @@ package Tile;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,7 +18,7 @@ public class TileManager {
     public TileManager(GamePanel gp){
         this.gp = gp;
         tiles = new Tile[10];//10 blocuri
-        mapTileNum = new int[gp.maxScreenRow][gp.maxScreenCol];
+        mapTileNum = new int[gp.maxWorldRow][gp.maxWorldCol];
         getTileImaege();
         loadMap();
 
@@ -38,6 +39,17 @@ public class TileManager {
             tiles[2] = new Tile();
             tiles[2].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/water00.png"));
 
+            tiles[3] = new Tile();
+            tiles[3].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/earth.png"));
+
+            tiles[4] = new Tile();
+            tiles[4].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/tree.png"));
+
+            tiles[5] = new Tile();
+            tiles[5].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/sand.png"));
+
+
+
 
         }
         catch (Exception e){
@@ -47,22 +59,22 @@ public class TileManager {
 
 public  void loadMap(){
         try {
-            InputStream is = getClass().getResourceAsStream("/Maps/maps.txt");
+            InputStream is = getClass().getResourceAsStream("/Maps/world01.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
             int row = 0;
-            while (col<gp.maxScreenCol && row<gp.maxScreenRow){
+            while (col<gp.maxWorldCol && row<gp.maxWorldRow){
               String line = br.readLine();//Citeste linie cu linie
 
-                while (col<gp.maxScreenCol){
+                while (col<gp.maxWorldCol){
                     String numbers[]= line.split(" ");//Imparte linia in numere
 
                     int num = Integer.parseInt(numbers[col]);//Converteste numarul in int
                     mapTileNum[row][col] = num;
                     col++;
                 }
-                if (col==gp.maxScreenCol){
+                if (col==gp.maxWorldCol){
                     col=0;
                     row++;
             }
@@ -79,24 +91,37 @@ public  void loadMap(){
 
 
 public  void draw(Graphics2D g2){
-      int col=0;
-        int row=0;
-        int x=0;
-        int y=0;
+      int worldCol=0;
+      int worldRow=0;
 
 
-        while (col<gp.maxScreenCol && row< gp.maxScreenRow){
-            int num = mapTileNum[row][col];
+        while (worldCol<gp.maxWorldCol && worldRow< gp.maxWorldRow){
+            int num = mapTileNum[worldRow][worldCol];
+            int worldX=worldCol*gp.titlesize;
+            int worldY=worldRow*gp.titlesize;
+            int screenX=worldX+gp.player.screenX-gp.player.Worldx;
+            int screenY=worldY+gp.player.screenY-gp.player.Worldy;
 
-            g2.drawImage(tiles[num].image,x,y,gp.titlesize,gp.titlesize,null);
-            col++;
-            x+=gp.titlesize;
-            if(col==gp.maxScreenCol){
-                col=0;
-                row++;
-                x=0;
-                y+=gp.titlesize;
+            //Verificam daca blocul este in raza de vizibilitate daca da il desenam
+            if (worldX+gp.titlesize>gp.player.Worldx-gp.player.screenX &&
+            worldX-gp.titlesize<gp.player.Worldx+gp.player.screenX&&
+            worldY+gp.titlesize>gp.player.Worldy-gp.player.screenY &&
+            worldY-gp.titlesize<gp.player.Worldy+gp.player.screenY){
+
+                g2.drawImage(tiles[num].image,screenX,screenY,gp.titlesize,gp.titlesize,null);
+
             }
+
+
+            worldCol++;
+
+            if(worldCol==gp.maxWorldCol){
+                worldCol=0;
+                worldRow++;
+
+
+            }
+
         }
 
 }
