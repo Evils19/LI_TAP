@@ -1,5 +1,6 @@
 package Entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -13,5 +14,8 @@ public BufferedImage objectImage;
     public BufferedImage [] jos = new BufferedImage[3];
     public BufferedImage [] stanga = new BufferedImage[3];
     public BufferedImage [] dreapta = new BufferedImage[3];
+    public Rectangle coliziune;
+    public String direction="sus";
+    public  boolean collision = false;
 
 }

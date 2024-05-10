@@ -14,7 +14,7 @@ public class Player  extends Entity{
 
     GamePanel gamePanel;
     KeyHandler keyHandler;
-    String direction="sus";
+
 
     private int susIndex = 0;
     private int josIndex = 0;
@@ -29,6 +29,7 @@ public class Player  extends Entity{
         keyHandler = kh;
         screenX = gamePanel.screenWidth/2- gamePanel.titlesize/2;
         screenY = gamePanel.screenHeight/2- gamePanel.titlesize/2;
+        coliziune= new Rectangle(16,16,25,25);
         setDefaultPosition();
         importImage();
     }
@@ -50,24 +51,31 @@ public class Player  extends Entity{
 
     public void update() {
         if (keyHandler.MiscareSus) {
+          if (!collision)
             Worldy -= speed;
             direction = "sus";
             susIndex = (susIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru sus
         } else if (keyHandler.MiscareJos) {
+            if (!collision)
             Worldy += speed;
             direction = "jos";
             josIndex = (josIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru jos
         } else if (keyHandler.MiscareStanga) {
+            if (!collision)
             Worldx -= speed;
             direction = "stanga";
             stangaIndex = (stangaIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru stânga
         } else if (keyHandler.MiscareDreapta) {
+            if (!collision)
             Worldx += speed;
             direction = "dreapta";
             dreaptaIndex = (dreaptaIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru dreapta
         }
 
 
+        collision =false;
+        gamePanel.dc.ColiziuneBloc(this);
+        //Daca conditia de coliziune este falsa atunci jucatorul se poate misca
 
 
         gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);

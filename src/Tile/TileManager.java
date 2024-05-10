@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tiles;
-    int mapTileNum [][];//Harta
+   public Tile[] tiles;
+   public int mapTileNum [][];//Harta
 
     public TileManager(GamePanel gp){
         this.gp = gp;
@@ -35,16 +35,18 @@ public class TileManager {
 
             tiles[1] = new Tile();
             tiles[1].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/wall.png"));
+            tiles[1].collision = true;//Blocul este solid si nu poate fi trecut peste
 
             tiles[2] = new Tile();
             tiles[2].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/water00.png"));
+            tiles[2].collision = true;
 
             tiles[3] = new Tile();
             tiles[3].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/earth.png"));
 
             tiles[4] = new Tile();
             tiles[4].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/tree.png"));
-
+            tiles[4].collision = true;
             tiles[5] = new Tile();
             tiles[5].image= ImageIO.read(getClass().getResourceAsStream("/Blocuri/sand.png"));
 

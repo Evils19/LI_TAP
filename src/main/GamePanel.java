@@ -28,7 +28,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     Thread gamethread;
     KeyHandler keyHandler = new KeyHandler();
 
-
+    public  DetectorColision dc = new DetectorColision(this);
    public Player player = new Player(this,keyHandler);
     TileManager tm = new TileManager(this);
 
