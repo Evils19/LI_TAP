@@ -20,9 +20,12 @@ public class SuperObject {
 
     public  void draw(Graphics2D g2d, GamePanel gp){
 
+        //Calculam coordonatele obiectului pe ecran
         int screenX = Worldx - gp.player.Worldx + gp.player.screenX;
         int screenY = Worldy - gp.player.Worldy + gp.player.screenY;
 
+
+        //Daca obiectul este in raza vizuala a jucatorului, il desenam
         if (Worldx+gp.titlesize>gp.player.Worldx - gp.player.screenX &&
                 Worldx<gp.player.Worldx + gp.player.screenX + gp.screenWidth &&
                 Worldy+gp.titlesize>gp.player.Worldy - gp.player.screenY &&

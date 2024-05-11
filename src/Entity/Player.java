@@ -4,9 +4,13 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+
 
 public class Player  extends Entity{
 
@@ -15,6 +19,8 @@ public class Player  extends Entity{
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
+   private int Playerx=64;
+    private int Playery=64;
 
     private int susIndex = 0;
     private int josIndex = 0;
@@ -37,7 +43,7 @@ public class Player  extends Entity{
         importImage();
     }
     private void  importImage(){
-        InputStream is= getClass().getResourceAsStream("/Schin/player.png");
+        InputStream is= getClass().getResourceAsStream("/Schin/player2.png");
 
         try {
             objectImage = ImageIO.read(is);
@@ -89,7 +95,7 @@ public class Player  extends Entity{
             gamePanel.label.setForeground(Color.red);
         }
         else{
-        gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
+//        gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
         gamePanel.label2.setText("Nr Chei "+ NrChei);
 
        gamePanel.label2.setForeground(Color.WHITE);
@@ -107,22 +113,26 @@ public class Player  extends Entity{
 
 
     public  void ObjectInteraction(int index){
-
         if (index!=999){
             switch (gamePanel.objects[index].name){
                 case "Key":
+                    gamePanel.playSE(1);
                     NrChei++;
                     gamePanel.objects[index].Worldx=0;
                     gamePanel.objects[index].Worldy=0;
                     gamePanel.label.setText("");
                     break;
                 case "Door":
+
                     if (NrChei>0){
+                        gamePanel.playSE(3);
                         NrChei--;
                         gamePanel.objects[index].Worldx=0;
                         gamePanel.objects[index].Worldy=0;
                     }
                     else {
+
+
                         gamePanel.label.setText("Nu ai cheie");
                         gamePanel.label.setForeground(Color.red);
                         collision=true;
@@ -132,13 +142,31 @@ public class Player  extends Entity{
                     gamePanel.objects[index].Worldx=0;
 
                     break;
-                default:
-                    gamePanel.label.setText("");
+                case "Boots":
+
+                    Timer timer = new Timer(1000, new ActionListener() {
+
+                        int i = 0;
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (i <= 10) {
+                                speed = 8;
+                                gamePanel.label.setText("Time super speed: " + (10-i) + " sec");
+                                i++;
+                            } else {
+                                ((Timer) e.getSource()).stop();
+                                speed = 4;
+                            }
+                        }
+                    });
+                    timer.start();//Porneste timerul
+                    gamePanel.playSE(2);
+                    gamePanel.objects[index].Worldx=0;
                     break;
             }
 
         }
-
 
     }
 
@@ -159,18 +187,24 @@ public class Player  extends Entity{
 
 public  void draw(Graphics2D g2d){
 
-    jos[0]= objectImage.getSubimage(0*180,0*180,180,180);
-    jos[1]= objectImage.getSubimage(1*180,0*180,180,180);
-    jos[2]= objectImage.getSubimage(2*180,0*180,180,180);
-    stanga[0]= objectImage.getSubimage(0*180,1*180,180,180);
-    stanga[1]= objectImage.getSubimage(1*180,1*180,180,180);
-    stanga[2]= objectImage.getSubimage(2*180,1*180,180,180);
-    dreapta[0]= objectImage.getSubimage(0*180,2*180,180,180);
-    dreapta[1]= objectImage.getSubimage(1*180,2*180,180,180);
-    dreapta[2]= objectImage.getSubimage(2*180,2*180,180,180);
-    sus[0]= objectImage.getSubimage(0*180,3*180,180,180);
-    sus[1]= objectImage.getSubimage(1*180,3*180,180,180);
-    sus[2]= objectImage.getSubimage(2*180,3*180,180,180);
+    jos[0]= objectImage.getSubimage(0*Playerx,0*Playery,Playerx,Playery);
+    jos[1]= objectImage.getSubimage(1*Playerx,0*Playery,Playerx,Playery);
+    jos[2]= objectImage.getSubimage(2*Playerx,0*Playery,Playerx,Playery);
+    jos[3]= objectImage.getSubimage(3*Playerx,0*Playery,Playerx,Playery);
+ stanga[0]= objectImage.getSubimage(0*Playerx,1*Playery,Playerx,Playery);
+    stanga[1]= objectImage.getSubimage(1*Playerx,1*Playery,Playerx,Playery);
+    stanga[2]= objectImage.getSubimage(2*Playerx,1*Playery,Playerx,Playery);
+    stanga[3]= objectImage.getSubimage(3*Playerx,1*Playery,Playerx,Playery);
+    dreapta[0]= objectImage.getSubimage(0*Playerx,2*Playery,Playerx,Playery);
+    dreapta[1]= objectImage.getSubimage(1*Playerx,2*Playery,Playerx,Playery);
+    dreapta[2]= objectImage.getSubimage(2*Playerx,2*Playery,Playerx,Playery);
+    dreapta[3]= objectImage.getSubimage(3*Playerx,2*Playery,Playerx,Playery);
+    sus[0]= objectImage.getSubimage(0*Playerx,3*Playery,Playerx,Playery);
+    sus[1]= objectImage.getSubimage(1*Playerx,3*Playery,Playerx,Playery);
+    sus[2]= objectImage.getSubimage(2*Playerx,3*Playery,Playerx,Playery);
+    sus[3]= objectImage.getSubimage(3*Playerx,3*Playery,Playerx,Playery);
+
+
 
     BufferedImage image = null;
 
@@ -191,7 +225,7 @@ public  void draw(Graphics2D g2d){
 
 
 
-    g2d.drawImage(image.getSubimage(0,0,180,180),screenX, screenY,gamePanel.titlesize*3/2,gamePanel.titlesize*3/2,null);
+    g2d.drawImage(image.getSubimage(0,0,64,64),screenX, screenY,gamePanel.titlesize*3/2,gamePanel.titlesize*3/2,null);
 
 
 
