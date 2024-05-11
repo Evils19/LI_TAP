@@ -10,10 +10,10 @@ public class Entity {
 
 
 public BufferedImage objectImage;
-    public BufferedImage [] sus = new BufferedImage[3];
-    public BufferedImage [] jos = new BufferedImage[3];
-    public BufferedImage [] stanga = new BufferedImage[3];
-    public BufferedImage [] dreapta = new BufferedImage[3];
+    public BufferedImage [] sus = new BufferedImage[4];
+    public BufferedImage [] jos = new BufferedImage[4];
+    public BufferedImage [] stanga = new BufferedImage[4];
+    public BufferedImage [] dreapta = new BufferedImage[4];
     public Rectangle coliziune;
     public String direction="sus";
     public  boolean collision = false;

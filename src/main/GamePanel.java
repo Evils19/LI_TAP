@@ -11,6 +11,9 @@ public class GamePanel extends JPanel  implements Runnable{
 
 //FPS-ul jocului
     int FPS = 60;
+
+
+    //Sistemul jocului______________________________________________________________
 final int  originalTileSize = 16;//16x16 pixels marimea obiectelor
 final int scale = 3;//Este scara cu care marim jocul 16*3=48
   public  final int titlesize= originalTileSize*scale;//48X48  este marimea obiectelor
@@ -25,18 +28,27 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public final int worldWidth = maxWorldCol*titlesize;//50*48=2400 pixeli
     public final int worldHeight = maxWorldRow*titlesize;//50*48=2400 pixeli
 
-
+    public UI ui = new UI(this);
+    public  Sound sound = new Sound();
     Thread gamethread;
-    KeyHandler keyHandler = new KeyHandler();
+    KeyHandler keyHandler = new KeyHandler(this);
 
     public  DetectorColision dc = new DetectorColision(this);
    public Player player = new Player(this,keyHandler);
     TileManager tm = new TileManager(this);
   public   SetObject so = new SetObject(this);
     public SuperObject[] objects = new SuperObject[10];
+    //________________________________________________________________________________
+
+
+//Statult jocului_____________________________________________________________________
+    public  int gameState;
+    public  final int MENU_STATE = 1;
+    public  final int PLAY_STATE = 2;
 
 
 
+//____________________________________________________________________________________
   public  JLabel label = new JLabel();
   public  JLabel label2 = new JLabel();
 
@@ -48,7 +60,6 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         this.setDoubleBuffered(true);//Dubleaza bufferul pentru a evita flickering-ul
         this.add(label);
 
-        this.add(label2);
 
 
 
@@ -56,12 +67,17 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
     public  void  setupGame(){
         so.SetObject();
-    }
+        PlaySound(0);
+        gameState = PLAY_STATE;
 
+    }//Seteaza obiectele in joc
+//Thread-ul jocului
     public  void startGameThread(){
         gamethread = new Thread(this);//Creaza un nou thread care primeste acesata clasa
         gamethread.start();
     }
+
+    //Thread-ul jocului_________________________________________________________
     @Override
     public void run() {
       double  Interval = 1000000000/FPS;
@@ -94,22 +110,43 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
 }
     public void update(){
+        if (gameState == PLAY_STATE){
+            player.update();
+        }
+        if (gameState == MENU_STATE){
 
-        player.update();
+        }
+    }
+    //____________________________________________________________________________
 
+//Music______________________________________________________________
 
+    public void PlaySound(int i){
+        sound.SetFile(i);
+        sound.Play();
+        sound.Loop();
+    }
+    public void StopSound(){
+        sound.Stop();
+    }
+    public  void playSE(int i){
+        sound.SetFile(i);
+        sound.Play();
     }
 
 
 
+//____________________________________________________________________
 
 
 
-
+//Desenarea jocului___________________________________________________
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         Graphics2D g2d2 = (Graphics2D) g;
+
+
 
 //Blocuri
         tm.draw(g2d);
@@ -121,8 +158,12 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         }
         //Jucator
         player.draw(g2d2);
+        //UI
+        ui.draw(g2d);
+
 
 
 
     }
 }
+//___________________________________________________________________

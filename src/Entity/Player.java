@@ -31,6 +31,7 @@ public class Player  extends Entity{
     public final  int screenX;
     public final  int screenY;
     public  int NrChei=0;
+    public  int TempNrChei=0;
     public Player(GamePanel gp, KeyHandler kh){
         gamePanel = gp;
         keyHandler = kh;
@@ -78,7 +79,23 @@ public class Player  extends Entity{
             if (!collision)
             Worldx += speed;
             direction = "dreapta";
-            dreaptaIndex = (dreaptaIndex + 1) % 3; // Schimbă imaginea la următoarea din setul pentru dreapta
+            dreaptaIndex = (dreaptaIndex + 1) % 3;
+            // Schimbă imaginea la următoarea din setul pentru dreapta
+        }
+        else if (keyHandler.Hack){
+            if (speed==4){
+                speed=8;
+                TempNrChei=NrChei;
+                NrChei=999;
+
+
+            }
+            else {
+                speed=4;
+                NrChei=TempNrChei;
+            }
+
+
         }
 
 
@@ -96,7 +113,7 @@ public class Player  extends Entity{
         }
         else{
 //        gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
-        gamePanel.label2.setText("Nr Chei "+ NrChei);
+
 
        gamePanel.label2.setForeground(Color.WHITE);
 
@@ -114,57 +131,7 @@ public class Player  extends Entity{
 
     public  void ObjectInteraction(int index){
         if (index!=999){
-            switch (gamePanel.objects[index].name){
-                case "Key":
-                    gamePanel.playSE(1);
-                    NrChei++;
-                    gamePanel.objects[index].Worldx=0;
-                    gamePanel.objects[index].Worldy=0;
-                    gamePanel.label.setText("");
-                    break;
-                case "Door":
 
-                    if (NrChei>0){
-                        gamePanel.playSE(3);
-                        NrChei--;
-                        gamePanel.objects[index].Worldx=0;
-                        gamePanel.objects[index].Worldy=0;
-                    }
-                    else {
-
-
-                        gamePanel.label.setText("Nu ai cheie");
-                        gamePanel.label.setForeground(Color.red);
-                        collision=true;
-                    }
-                    break;
-                case "Сhest":
-                    gamePanel.objects[index].Worldx=0;
-
-                    break;
-                case "Boots":
-
-                    Timer timer = new Timer(1000, new ActionListener() {
-
-                        int i = 0;
-
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if (i <= 10) {
-                                speed = 8;
-                                gamePanel.label.setText("Time super speed: " + (10-i) + " sec");
-                                i++;
-                            } else {
-                                ((Timer) e.getSource()).stop();
-                                speed = 4;
-                            }
-                        }
-                    });
-                    timer.start();//Porneste timerul
-                    gamePanel.playSE(2);
-                    gamePanel.objects[index].Worldx=0;
-                    break;
-            }
 
         }
 

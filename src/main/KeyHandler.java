@@ -5,8 +5,13 @@ import java.awt.event.KeyEvent;
 
 
 public class KeyHandler implements KeyListener {
-public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,tostart;
+public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,tostart,Hack,isXPressed, isEPressed,isPaused;
 
+GamePanel gp;
+
+public KeyHandler(GamePanel gp){
+    this.gp = gp;
+}
     @Override
     public void keyTyped(KeyEvent keyEvent) {}
 
@@ -28,7 +33,27 @@ if (code ==KeyEvent.VK_A){
     }
 if (code ==KeyEvent.VK_D){
     MiscareDreapta=true;
-    }}
+    }
+        if (code == KeyEvent.VK_X) {
+            isXPressed = true;
+        } else if (code == KeyEvent.VK_E) {
+            isEPressed = true;
+        }
+
+        if (isXPressed && isEPressed) {
+            // Ambele taste sunt apăsate simultan
+            Hack = true;
+        }
+
+        if (code == KeyEvent.VK_ESCAPE) {
+           if (gp.gameState == gp.PLAY_STATE){
+               gp.gameState = gp.MENU_STATE;
+           }
+           else if (gp.gameState == gp.MENU_STATE){
+               gp.gameState = gp.PLAY_STATE;
+           }
+        }
+    }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {//Tasta eliberata
@@ -47,6 +72,15 @@ if (code ==KeyEvent.VK_D){
         }
         if (code ==KeyEvent.VK_D){
             MiscareDreapta=false;
+        }
+        if (code == KeyEvent.VK_X) {
+            isXPressed = false;
+        } else if (code == KeyEvent.VK_E) {
+            isEPressed = false;
+        }
+        if (!isXPressed && !isEPressed) {
+            // Niciuna dintre taste nu este apăsată
+            Hack = false;
         }
 
     }
