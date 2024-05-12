@@ -15,6 +15,8 @@ public class UI {
     public  String message = "";
     int messageTime = 0;
     double playTime;
+    public String Dialog;
+
 
     public  boolean GameOver = false;
 private Color colorMessage=Color.WHITE;
@@ -31,9 +33,7 @@ private Color colorMessage=Color.WHITE;
 
     public  void  ShowMessage(String message,Color color){
 
-        if (color.equals("red")){
 
-        }
         messageOn = true;
         this.message = message;
         colorMessage = color;
@@ -52,17 +52,6 @@ private Color colorMessage=Color.WHITE;
     }
     if (gp.gameState==gp.PLAY_STATE){
     GameTime();
-
-
-
-    }
-    }
-
-
-
-    public void GameTime(){
-        playTime+=(double)1/60;
-        g2d.drawString("Timp: "+(int)playTime, gp.titlesize*14, 65);
         if (messageOn) {
 
             g2d.setColor(colorMessage);
@@ -76,6 +65,47 @@ private Color colorMessage=Color.WHITE;
 
             }
         }
+    }
+        if (gp.gameState==gp.Dialog_STATE){
+            drawDialog();
+        }
+
+
+    }
+
+
+public void drawDialog(){
+        //Fereastra de dialog
+    int x=gp.titlesize*2;
+    int y=gp.titlesize*1;
+    int width=gp.screenWidth-gp.titlesize*4;
+    int height=gp.titlesize*4;
+
+    drawSubWindow(x,y,width,height);
+
+    x+=gp.titlesize;
+    y+=gp.titlesize;
+    g2d.drawString(Dialog,x,y);
+
+}
+
+public  void  drawSubWindow(int x,int y,int width,int height) {
+        Color color = new Color(0, 0, 0, 200);
+    g2d.setColor(color);
+    g2d.fillRoundRect(x, y, width, height, 35, 35);
+    color = new Color(255, 255, 255, 255);
+    g2d.setColor(color);
+    g2d.setStroke(new BasicStroke(5));
+    g2d.drawRoundRect(x, y, width, height, 25, 25);
+
+    }
+
+
+    public void GameTime(){
+        playTime+=(double)1/60;
+        g2d.drawString("Timp: "+(int)playTime, gp.titlesize*14, 65);
+
+
     }
 
     public  void  drawMenu(){
@@ -94,6 +124,8 @@ private Color colorMessage=Color.WHITE;
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         return gp.screenWidth/2-length-gp.titlesize*3/2;
     }
+
+
 }
 
 

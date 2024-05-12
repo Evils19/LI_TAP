@@ -9,20 +9,19 @@ public class Main {
 JFrame window = new JFrame();
 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Inchide aplicatia cand apasam pe X
 window.setResizable(false);//Nu spoate de schimbat marimea ferestrei
-window.setTitle("Snake Game");
-GamePanel gamePanel = new GamePanel();
-window.add(gamePanel);
-window.pack();//Face fereastra sa fie de dimensiunea main.GamePanel
+window.setTitle("Lucru individual TAP");
+GamePanel gp = new GamePanel();
 
-window.setLocationRelativeTo(null);//Fixam fereastra in mijlocul ecranului
+//LoginForm loginForm = new LoginForm(window, gamePanel);
+//loginForm.setVisible(true);
+
+
+        window.add(gp);
+      window.pack();
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
-
-
-        gamePanel.setupGame();
-        gamePanel.startGameThread();
-
-
-
+        gp.setupGame();
+        gp.startGameThread();
 
         }
     }

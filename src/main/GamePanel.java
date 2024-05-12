@@ -1,5 +1,6 @@
 package main;
 
+import Entity.Entity;
 import Entity.Player;
 import Obiecte.SuperObject;
 import Tile.TileManager;
@@ -11,9 +12,12 @@ public class GamePanel extends JPanel  implements Runnable{
 
 //FPS-ul jocului
     int FPS = 60;
+//Varibile pentru operatii_____________________________________________________
+    int i;
+//____________________________________________________________________________
 
 
-    //Sistemul jocului______________________________________________________________
+//Sistemul jocului______________________________________________________________
 final int  originalTileSize = 16;//16x16 pixels marimea obiectelor
 final int scale = 3;//Este scara cu care marim jocul 16*3=48
   public  final int titlesize= originalTileSize*scale;//48X48  este marimea obiectelor
@@ -38,6 +42,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     TileManager tm = new TileManager(this);
   public   SetObject so = new SetObject(this);
     public SuperObject[] objects = new SuperObject[10];
+    public Entity NPC[]= new Entity[10];
     //________________________________________________________________________________
 
 
@@ -45,6 +50,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public  int gameState;
     public  final int MENU_STATE = 1;
     public  final int PLAY_STATE = 2;
+    public  final int Dialog_STATE = 3;
 
 
 
@@ -67,6 +73,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
     public  void  setupGame(){
         so.SetObject();
+        so.SetNPS();
         PlaySound(0);
         gameState = PLAY_STATE;
 
@@ -111,11 +118,19 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 }
     public void update(){
         if (gameState == PLAY_STATE){
+
+            for (int i=0;i<NPC.length;i++){
+                if (NPC[i]!=null){
+                    NPC[i].update();
+                }
+            }
             player.update();
         }
         if (gameState == MENU_STATE){
 
         }
+
+
     }
     //____________________________________________________________________________
 
@@ -156,10 +171,20 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
                 objects[i].draw(g2d,this);
             }
         }
+        for (int i=0;i<NPC.length;i++){
+            if (NPC[i]!=null){
+                NPC[i].draw(g2d);
+            }
+        }
+
+
         //Jucator
         player.draw(g2d2);
         //UI
         ui.draw(g2d);
+        //NPC
+
+
 
 
 

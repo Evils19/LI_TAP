@@ -4,10 +4,7 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
@@ -16,7 +13,7 @@ public class Player  extends Entity{
 
 
 
-    GamePanel gamePanel;
+
     KeyHandler keyHandler;
 
    private int Playerx=64;
@@ -33,11 +30,12 @@ public class Player  extends Entity{
     public  int NrChei=0;
     public  int TempNrChei=0;
     public Player(GamePanel gp, KeyHandler kh){
-        gamePanel = gp;
+        super(gp);
+
         keyHandler = kh;
-        screenX = gamePanel.screenWidth/2- gamePanel.titlesize/2;
-        screenY = gamePanel.screenHeight/2- gamePanel.titlesize/2;
-        coliziune= new Rectangle(16,16,25,25);
+        screenX = this.gp.screenWidth/2- this.gp.titlesize/2;
+        screenY = this.gp.screenHeight/2- this.gp.titlesize/2;
+        coliziune= new Rectangle(10,18,25,25);
         SolidDefaultX=coliziune.x;
         SolidDefaultY=coliziune.y;
         setDefaultPosition();
@@ -53,8 +51,8 @@ public class Player  extends Entity{
     }
     }
     public  void setDefaultPosition(){
-        Worldx = gamePanel.titlesize*23;
-        Worldy =gamePanel.titlesize*21;
+        Worldx = gp.titlesize*23;
+        Worldy = gp.titlesize*21;
         speed=4;
     }
 
@@ -82,40 +80,49 @@ public class Player  extends Entity{
             dreaptaIndex = (dreaptaIndex + 1) % 3;
             // Schimbă imaginea la următoarea din setul pentru dreapta
         }
-        else if (keyHandler.Hack){
-            if (speed==4){
-                speed=8;
-                TempNrChei=NrChei;
-                NrChei=999;
 
 
-            }
-            else {
-                speed=4;
-                NrChei=TempNrChei;
-            }
+             if (keyHandler.Hack) {
+                 if (this.speed == 4) {
+                     this.speed = 8;
+                     gp.ui.ShowMessage("Cheat Activat", Color.red);
+                 } else if (this.speed == 8) {
+                     this.speed = 4;
+                     gp.ui.ShowMessage("Cheat Deactivat", Color.green);
+                 }
+             }
 
 
-        }
+
+
+
+
 
 
         collision =false;
-        gamePanel.dc.ColiziuneBloc(this);
+        gp.dc.ColiziuneBloc(this);
+
         //Coloziune obiecte
-      int objIndex=  gamePanel.dc.ColoziuneObiect(this,true);
+      int objIndex=  gp.dc.ColoziuneObiect(this,true);
       ObjectInteraction(objIndex);
+
+      //Coliziune NPC
+      int NpcIndex=gp.dc.ColiziuneNPC(this,gp.NPC);
+        NPCInteraction(NpcIndex);
+
+
         //Daca conditia de coliziune este falsa atunci jucatorul se poate misca
 
 
         if (Worldx>=416 && Worldy<508 && Worldx <516){
-            gamePanel.label.setText("Comoara pierduta iarasi a gasit lumina zilei");
-            gamePanel.label.setForeground(Color.red);
+            gp.label.setText("Comoara pierduta iarasi a gasit lumina zilei");
+            gp.label.setForeground(Color.red);
         }
         else{
 //        gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
 
 
-       gamePanel.label2.setForeground(Color.WHITE);
+       gp.label2.setForeground(Color.WHITE);
 
 
 
@@ -129,12 +136,21 @@ public class Player  extends Entity{
 
 
 
+
     public  void ObjectInteraction(int index){
         if (index!=999){
+collision=true;
 
 
         }
 
+    }
+    public void NPCInteraction(int index){
+        if (index!=999){
+            gp.gameState=gp.Dialog_STATE;
+            gp.NPC[index].speak();
+
+        }
     }
 
 
@@ -192,7 +208,7 @@ public  void draw(Graphics2D g2d){
 
 
 
-    g2d.drawImage(image.getSubimage(0,0,64,64),screenX, screenY,gamePanel.titlesize*3/2,gamePanel.titlesize*3/2,null);
+    g2d.drawImage(image.getSubimage(0,0,64,64),screenX, screenY, gp.titlesize*3/2, gp.titlesize*3/2,null);
 
 
 

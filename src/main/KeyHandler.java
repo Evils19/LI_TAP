@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 
 public class KeyHandler implements KeyListener {
-public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,tostart,Hack,isXPressed, isEPressed,isPaused;
+public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed;
 
 GamePanel gp;
 
@@ -19,9 +19,6 @@ public KeyHandler(GamePanel gp){
     public void keyPressed(KeyEvent keyEvent) {//Apasa tasta
 int code = keyEvent.getKeyCode();
 
-if (code ==KeyEvent.VK_SPACE){
-            tostart=true;
-}
 if (code ==KeyEvent.VK_W){
     MiscareSus = true;
     }
@@ -58,9 +55,7 @@ if (code ==KeyEvent.VK_D){
     @Override
     public void keyReleased(KeyEvent keyEvent) {//Tasta eliberata
         int code = keyEvent.getKeyCode();
-        if (code ==KeyEvent.VK_SPACE){
-            tostart = false;
-        }
+
         if (code ==KeyEvent.VK_W){
             MiscareSus = false;
         }

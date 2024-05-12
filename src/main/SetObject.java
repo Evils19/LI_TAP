@@ -1,5 +1,6 @@
 package main;
 
+import Entity.NPC_Gargulia;
 import Obiecte.ObiectBoots;
 import Obiecte.ObiectChest;
 import Obiecte.ObiectDoor;
@@ -15,9 +16,13 @@ public class SetObject {
 
     public  void SetObject(){
 
+}
 
 
-
+public void SetNPS(){
+        gp.NPC[0] = new NPC_Gargulia(gp);
+        gp.NPC[0].Worldx=21*gp.titlesize;
+        gp.NPC[0].Worldy=21*gp.titlesize;
 }
 
 }
