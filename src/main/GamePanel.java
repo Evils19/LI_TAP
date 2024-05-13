@@ -35,6 +35,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public UI ui = new UI(this);
     public  Sound sound = new Sound();
     Thread gamethread;
+    public Event event = new Event(this);
   public   KeyHandler keyHandler = new KeyHandler(this);
 
     public  DetectorColision dc = new DetectorColision(this);
@@ -43,6 +44,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
   public   SetObject so = new SetObject(this);
     public SuperObject[] objects = new SuperObject[10];
     public Entity NPC[]= new Entity[10];
+
     //________________________________________________________________________________
 
 
@@ -74,8 +76,11 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public  void  setupGame(){
         so.SetObject();
         so.SetNPS();
-        PlaySound(0);
-        gameState = PLAY_STATE;
+
+        gameState = ui.TitleState;
+        PlaySound(7);
+
+
 
     }//Seteaza obiectele in joc
 //Thread-ul jocului
@@ -159,35 +164,36 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         Graphics2D g2d2 = (Graphics2D) g;
+//Title Display
 
+        if (gameState==ui.TitleState) {
 
-
-//Blocuri
-        tm.draw(g2d);
-        //Obiecte
-        for (int i=0;i<objects.length;i++){
-            if (objects[i]!=null){
-                objects[i].draw(g2d,this);
-            }
-        }
-        for (int i=0;i<NPC.length;i++){
-            if (NPC[i]!=null){
-                NPC[i].draw(g2d);
-            }
-        }
-
-
-        //Jucator
-        player.draw(g2d2);
-        //UI
         ui.draw(g2d);
-        //NPC
+        }
+        else {
+//Blocuri
+            tm.draw(g2d);
+            //Obiecte
+            for (int i = 0; i < objects.length; i++) {
+                if (objects[i] != null) {
+                    objects[i].draw(g2d, this);
+                }
+            }
+            //NPC
+            for (int i = 0; i < NPC.length; i++) {
+                if (NPC[i] != null) {
+                    NPC[i].draw(g2d);
+                }
+            }
 
 
-
-
+            //Jucator
+            player.draw(g2d2);
+            //UI
+            ui.draw(g2d);
 
 
     }
+}
 }
 //___________________________________________________________________

@@ -54,6 +54,10 @@ public class Player  extends Entity{
         Worldx = gp.titlesize*23;
         Worldy = gp.titlesize*21;
         speed=4;
+        //Statul jocatorului
+        MaxLife=6;
+        Life=MaxLife;
+
     }
 
 
@@ -85,19 +89,22 @@ public class Player  extends Entity{
              if (keyHandler.Hack) {
                  if (this.speed == 4) {
                      this.speed = 8;
+                     TempNrChei=Life;
+                     final int Life=6;
+                        this.Life=Life;
+
                      gp.ui.ShowMessage("Cheat Activat", Color.red);
                  } else if (this.speed == 8) {
+                        Life=TempNrChei;
                      this.speed = 4;
                      gp.ui.ShowMessage("Cheat Deactivat", Color.green);
                  }
              }
 
+//             gp.label.setText("Cordonata x "+Worldx+"Cordonata y "+Worldy);
 
-
-
-
-
-
+        //Event
+        gp.event.checkEvent();
 
         collision =false;
         gp.dc.ColiziuneBloc(this);
@@ -111,22 +118,7 @@ public class Player  extends Entity{
         NPCInteraction(NpcIndex);
 
 
-        //Daca conditia de coliziune este falsa atunci jucatorul se poate misca
-
-
-        if (Worldx>=416 && Worldy<508 && Worldx <516){
-            gp.label.setText("Comoara pierduta iarasi a gasit lumina zilei");
-            gp.label.setForeground(Color.red);
-        }
-        else{
-//        gamePanel.label.setText("Cordonate "+ Worldx +" "+ Worldy);
-
-
-       gp.label2.setForeground(Color.WHITE);
-
-
-
-        }
+       ;
 
 
 
@@ -148,13 +140,13 @@ collision=true;
     public void NPCInteraction(int index){
         if (index!=999){
             gp.ui.ShowMessage("Apasa Enter pentru a vorbi",Color.WHITE);
-            if (gp.keyHandler.StartDialog){
+            if (gp.keyHandler.isEnter){
                 gp.gameState=gp.Dialog_STATE;
                 gp.NPC[index].speak();
             }
 
         }
-        gp.keyHandler.StartDialog=false;
+        gp.keyHandler.isEnter =false;
     }
 
 
@@ -209,6 +201,7 @@ public  void draw(Graphics2D g2d){
             image = dreapta[dreaptaIndex]; // Selectează imaginea corespunzătoare din setul pentru dreapta
             break;
     }
+
 
 
 

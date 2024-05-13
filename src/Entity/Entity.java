@@ -18,6 +18,8 @@ public class Entity {
     public  int Worldx, Worldy;
     public  int speed;
     String dialog[]=new String[20];
+    public  int MaxLife;
+    public  int Life;
 
 
 
