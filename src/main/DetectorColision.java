@@ -247,5 +247,66 @@ return index;
 
     }
 
+
+
+
+
+
+    public boolean  BColiziunePlayer(Entity entity){
+boolean col=false;
+//Partea solida a  personajului
+        entity.coliziune.x=entity.Worldx+entity.coliziune.x;//Coltul stanga al personajului
+        entity.coliziune.y=entity.Worldy+entity.coliziune.y;//Coltul de sus al personajului
+//Partea solida a obiectului
+        gp.player.coliziune.x=gp.player.Worldx+gp.player.SolidDefaultX;
+        gp.player.coliziune.y=gp.player.Worldy+gp.player.SolidDefaultY;
+
+
+        switch (entity.direction){
+            case "sus":
+
+                entity.coliziune.y-=entity.speed;//Are scopul de a verifica coliziunea in directia in care se misca personajul
+                if (entity.coliziune.intersects(gp.player.coliziune)){
+                    entity.collision=true;
+
+
+                }
+                break;
+            case "jos":
+                entity.coliziune.y+=entity.speed;
+                if (entity.coliziune.intersects(gp.player.coliziune)){
+                    entity.collision=true;
+
+                }
+                break;
+            case "stanga":
+                entity.coliziune.x-=entity.speed;
+                if (entity.coliziune.intersects(gp.player.coliziune)){
+
+                    entity.collision=true;
+
+
+                }
+                break;
+            case "dreapta":
+                entity.coliziune.x+=entity.speed;
+                if (entity.coliziune.intersects(gp.player.coliziune)){
+                    entity.collision=true;
+                }
+                break;
+        }
+        entity.coliziune.x= entity.SolidDefaultX;
+        entity.coliziune.y= entity.SolidDefaultY;
+        gp.player.coliziune.x=gp.player.SolidDefaultX;
+        gp.player.coliziune.y=gp.player.SolidDefaultY;
+
+
+
+        return col;
+    }
+
+
+
+
 }
 

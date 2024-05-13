@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class NPC_Gargulia extends Entity {
 
-
+int indexDialog=0;
     public NPC_Gargulia(GamePanel gp){
         super(gp);
 
@@ -26,7 +26,9 @@ public class NPC_Gargulia extends Entity {
 
     public  void setDialog(){
         dialog[0]="Salut, sunt Gargulia";
-
+        dialog[1]="Bine venit  pe insula Insula regilor uitați";
+        dialog[2]="La prima vedere aici totul pare normal\ndar daca o sa cauti comoara insulei vei fi oprit";
+        dialog[3]="Succes sper sa te mai vad";
     }
     public  void GetPplayerImage(){
 
@@ -74,6 +76,21 @@ public class NPC_Gargulia extends Entity {
     }
 
     public  void speak(){
-        gp.ui.Dialog=dialog[0];
+
+        if (dialog[indexDialog]==null){
+            indexDialog=0;
+            gp.gameState=gp.PLAY_STATE;
+            return;
+        }
+        gp.ui.Dialog=dialog[indexDialog];
+        indexDialog++;
+
+    super.speak();
+
     }
+
+
+
+
+
 }

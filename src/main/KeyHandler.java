@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 
 public class KeyHandler implements KeyListener {
-public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed;
+public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed,StartDialog;
 
 GamePanel gp;
 
@@ -19,36 +19,55 @@ public KeyHandler(GamePanel gp){
     public void keyPressed(KeyEvent keyEvent) {//Apasa tasta
 int code = keyEvent.getKeyCode();
 
-if (code ==KeyEvent.VK_W){
-    MiscareSus = true;
+
+
+    if (code ==KeyEvent.VK_W){
+        MiscareSus = true;
     }
-if (code ==KeyEvent.VK_S){
-MiscareJos=true;
+    if (code ==KeyEvent.VK_S){
+        MiscareJos=true;
     }
-if (code ==KeyEvent.VK_A){
-    MiscareStanga=true;
+    if (code ==KeyEvent.VK_A){
+        MiscareStanga=true;
     }
-if (code ==KeyEvent.VK_D){
-    MiscareDreapta=true;
+    if (code ==KeyEvent.VK_D){
+        MiscareDreapta=true;
     }
-        if (code == KeyEvent.VK_X) {
-            isXPressed = true;
-        } else if (code == KeyEvent.VK_E) {
-            isEPressed = true;
+    if (code == KeyEvent.VK_ENTER) {
+        StartDialog = true;
+    }
+    if (code == KeyEvent.VK_X) {
+        isXPressed = true;
+    } else if (code == KeyEvent.VK_E) {
+        isEPressed = true;
+    }
+
+
+    if (isXPressed && isEPressed) {
+        // Ambele taste sunt apăsate simultan
+        Hack = true;
+    }
+
+    if (code == KeyEvent.VK_ESCAPE) {
+        if (gp.gameState == gp.PLAY_STATE){
+            gp.gameState = gp.MENU_STATE;
+        }
+        else if (gp.gameState == gp.MENU_STATE){
+            gp.gameState = gp.PLAY_STATE;
         }
 
-        if (isXPressed && isEPressed) {
-            // Ambele taste sunt apăsate simultan
-            Hack = true;
-        }
+    }
 
-        if (code == KeyEvent.VK_ESCAPE) {
-           if (gp.gameState == gp.PLAY_STATE){
-               gp.gameState = gp.MENU_STATE;
-           }
-           else if (gp.gameState == gp.MENU_STATE){
-               gp.gameState = gp.PLAY_STATE;
-           }
+
+
+
+
+//Daca este in dialog si apasam enter
+        if (gp.gameState == gp.Dialog_STATE){
+            if (code==KeyEvent.VK_ENTER){
+
+                gp.gameState = gp.PLAY_STATE;
+            }
         }
     }
 

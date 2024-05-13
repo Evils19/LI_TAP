@@ -85,14 +85,21 @@ public void drawDialog(){
 
     x+=gp.titlesize;
     y+=gp.titlesize;
-    g2d.drawString(Dialog,x,y);
+
+    for(String line : Dialog.split("\n")){
+        g2d.drawString(line,x,y);
+        y+=gp.titlesize;
+
+    }
+
+
 
 }
 
 public  void  drawSubWindow(int x,int y,int width,int height) {
         Color color = new Color(0, 0, 0, 200);
     g2d.setColor(color);
-    g2d.fillRoundRect(x, y, width, height, 35, 35);
+    g2d.fillRoundRect(x, y, width, height,35,35);
     color = new Color(255, 255, 255, 255);
     g2d.setColor(color);
     g2d.setStroke(new BasicStroke(5));

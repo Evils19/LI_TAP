@@ -109,7 +109,22 @@ objectImage=image;
 
 
     public void SetAcion() {}
-    public  void speak(){}
+    public  void speak(){
+        switch (gp.player.direction){
+            case "sus":
+                direction="jos";
+                break;
+            case "jos":
+                direction="sus";
+                break;
+            case "stanga":
+                direction="dreapta";
+                break;
+            case "dreapta":
+                direction="stanga";
+                break;
+        }
+    }
 
     public void update(){
         SetAcion();
@@ -125,6 +140,7 @@ objectImage=image;
         gp.dc.ColiziunePlayer(this);
 
     if (!collision){
+
         switch (direction){
             case "sus":
                 Worldy-=speed;
@@ -139,6 +155,10 @@ objectImage=image;
                 Worldx+=speed;
                 break;
         }
-        }
+
+
+
+    }
+
     }
 }

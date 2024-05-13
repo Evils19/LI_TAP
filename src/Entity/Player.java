@@ -147,10 +147,14 @@ collision=true;
     }
     public void NPCInteraction(int index){
         if (index!=999){
-            gp.gameState=gp.Dialog_STATE;
-            gp.NPC[index].speak();
+            gp.ui.ShowMessage("Apasa Enter pentru a vorbi",Color.WHITE);
+            if (gp.keyHandler.StartDialog){
+                gp.gameState=gp.Dialog_STATE;
+                gp.NPC[index].speak();
+            }
 
         }
+        gp.keyHandler.StartDialog=false;
     }
 
 

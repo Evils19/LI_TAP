@@ -35,7 +35,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public UI ui = new UI(this);
     public  Sound sound = new Sound();
     Thread gamethread;
-    KeyHandler keyHandler = new KeyHandler(this);
+  public   KeyHandler keyHandler = new KeyHandler(this);
 
     public  DetectorColision dc = new DetectorColision(this);
    public Player player = new Player(this,keyHandler);
@@ -126,9 +126,8 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
             }
             player.update();
         }
-        if (gameState == MENU_STATE){
 
-        }
+
 
 
     }
