@@ -91,7 +91,7 @@ boolean canTouchEvent = true;
         gp.gameState=gameState;
         gp.ui.Dialog="Acest izvor necunoscut a vindecat\n toate ranile tale";
         gp.playSE(1);
-        gp.player.Life+=1;
+        gp.player.Life=gp.player.MaxLife;
 }
 }
 }

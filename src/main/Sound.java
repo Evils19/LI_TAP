@@ -20,6 +20,7 @@ public class Sound {
         SoundURL[5] = getClass().getResource("/Schin/Sound/Usa incuiata.wav");
         SoundURL[6] = getClass().getResource("/Schin/Sound/Atomic.wav");
         SoundURL[7] = getClass().getResource("/Schin/Sound/meniu.wav");
+        SoundURL[8] = getClass().getResource("/Schin/Sound/login.wav");
     }
 
 public  void SetFile(int i){
