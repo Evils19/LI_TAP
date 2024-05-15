@@ -2,11 +2,13 @@ package main;
 
 import Entity.Entity;
 import Entity.Player;
-import Obiecte.SuperObject;
 import Tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel  implements Runnable{
 
@@ -42,8 +44,11 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
    public Player player = new Player(this,keyHandler);
     TileManager tm = new TileManager(this);
   public   SetObject so = new SetObject(this);
-    public SuperObject[] objects = new SuperObject[10];
+    public Entity[] objects = new Entity[10];
+
     public Entity NPC[]= new Entity[10];
+    ArrayList<Entity> EntityList = new ArrayList<>();
+
 
     //________________________________________________________________________________
 
@@ -135,6 +140,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
 
 
+
     }
     //____________________________________________________________________________
 
@@ -166,6 +172,8 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         Graphics2D g2d2 = (Graphics2D) g;
 //Title Display
 
+
+
         if (gameState==ui.TitleState) {
 
         ui.draw(g2d);
@@ -173,22 +181,42 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
         else {
 //Blocuri
             tm.draw(g2d);
-            //Obiecte
-            for (int i = 0; i < objects.length; i++) {
-                if (objects[i] != null) {
-                    objects[i].draw(g2d, this);
+
+            EntityList.add(player);
+            for (int i=0;i<NPC.length;i++){
+                if (NPC[i]!=null){
+                    EntityList.add(NPC[i]);
                 }
             }
-            //NPC
-            for (int i = 0; i < NPC.length; i++) {
-                if (NPC[i] != null) {
-                    NPC[i].draw(g2d);
+
+            for(int i=0;i<objects.length;i++){
+                if (objects[i]!=null){
+                    EntityList.add(objects[i]);
                 }
             }
+
+            //Sort
+            Collections.sort(EntityList,new Comparator<Entity>(){
+                @Override
+                public int compare(Entity o1, Entity o2) {
+                 int result = Integer.compare(o1.Worldy, o2.Worldy);
+                return result;
+
+                }
+            });
+
+for (int i=0;i<EntityList.size();i++){
+    EntityList.get(i).draw(g2d);
+}
+for (int i=0;i<EntityList.size();i++){
+    EntityList.remove(i);
+}
+
+
 
 
             //Jucator
-            player.draw(g2d2);
+          //  player.draw(g2d2);
             //UI
             ui.draw(g2d);
 

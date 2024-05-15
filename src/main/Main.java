@@ -12,16 +12,16 @@ window.setResizable(false);//Nu spoate de schimbat marimea ferestrei
 window.setTitle("Lucru individual TAP");
 GamePanel gp = new GamePanel();
 
-        LoginForm loginForm = new LoginForm(window, gp);
-        loginForm.setVisible(true);
+//        LoginForm loginForm = new LoginForm(window, gp);
+//        loginForm.setVisible(true);
 
 
-//        window.add(gp);
-//      window.pack();
-//        window.setLocationRelativeTo(null);
-//        window.setVisible(true);
-//        gp.setupGame();
-//        gp.startGameThread();
+        window.add(gp);
+         window.pack();
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+        gp.setupGame();
+        gp.startGameThread();
 
         }
     }

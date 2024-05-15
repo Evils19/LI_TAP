@@ -74,15 +74,15 @@ if (gp.objects[i]!=null){
     entity.coliziune.x=entity.Worldx+entity.coliziune.x;//Coltul stanga al personajului
     entity.coliziune.y=entity.Worldy+entity.coliziune.y;//Coltul de sus al personajului
 //Partea solida a obiectului
-    gp.objects[i].SolidObject.x=gp.objects[i].Worldx+gp.objects[i].SolidDefaultX;
-    gp.objects[i].SolidObject.y=gp.objects[i].Worldy+gp.objects[i].SolidDefaultY;
+    gp.objects[i].coliziune.x=gp.objects[i].Worldx+gp.objects[i].SolidDefaultX;
+    gp.objects[i].coliziune.y=gp.objects[i].Worldy+gp.objects[i].SolidDefaultY;
 
 
     switch (entity.direction){
     case "sus":
 
         entity.coliziune.y-=entity.speed;//Are scopul de a verifica coliziunea in directia in care se misca personajul
-        if (entity.coliziune.intersects(gp.objects[i].SolidObject)){
+        if (entity.coliziune.intersects(gp.objects[i].coliziune)){
             entity.ObjCollision=true;
             if (gp.objects[i].collision) entity.ObjCollision=true;
             if (player)index= i;
@@ -92,7 +92,7 @@ if (gp.objects[i]!=null){
         break;
 case "jos":
     entity.coliziune.y+=entity.speed;
-    if (entity.coliziune.intersects(gp.objects[i].SolidObject)){
+    if (entity.coliziune.intersects(gp.objects[i].coliziune)){
         if (gp.objects[i].collision) entity.ObjCollision=true;
         if (player)index= i;
 
@@ -102,7 +102,7 @@ case "jos":
     break;
 case "stanga":
     entity.coliziune.x-=entity.speed;
-    if (entity.coliziune.intersects(gp.objects[i].SolidObject)){
+    if (entity.coliziune.intersects(gp.objects[i].coliziune)){
         if (gp.objects[i].collision) entity.ObjCollision=true;
         if (player)index= i;
 
@@ -112,7 +112,7 @@ case "stanga":
     break;
 case "dreapta":
     entity.coliziune.x+=entity.speed;
-    if (entity.coliziune.intersects(gp.objects[i].SolidObject)){
+    if (entity.coliziune.intersects(gp.objects[i].coliziune)){
         if (gp.objects[i].collision) entity.ObjCollision=true;
         if (player)index= i;
 
@@ -121,8 +121,8 @@ case "dreapta":
 }
 entity.coliziune.x= entity.SolidDefaultX;
 entity.coliziune.y= entity.SolidDefaultY;
-gp.objects[i].SolidObject.x=gp.objects[i].SolidDefaultX;
-gp.objects[i].SolidObject.y=gp.objects[i].SolidDefaultY;
+gp.objects[i].coliziune.x=gp.objects[i].SolidDefaultX;
+gp.objects[i].coliziune.y=gp.objects[i].SolidDefaultY;
 }
 }
 

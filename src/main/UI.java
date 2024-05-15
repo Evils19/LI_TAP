@@ -1,8 +1,7 @@
 package main;
 
-import Obiecte.ObiectHp;
-import Obiecte.ObiectKey;
-import Obiecte.SuperObject;
+import Entity.Entity;
+import Entity.Obiecte.ObiectHp;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,7 +29,7 @@ public class UI {
     BufferedImage objectImage;
     private  Font customFont;
     public  int ComandNumber=0;
-    Color violet = new Color(49, 8, 117);
+    Color violet = new Color(94, 9, 9);
 
     URL url;
     ImageIcon icon;
@@ -67,10 +66,10 @@ private Color colorMessage=Color.WHITE;
             e.printStackTrace();
         }
 
-        SuperObject heart= new ObiectHp();
-        HeartImage[0]= heart.objectImage;
-        HeartImage[1]= heart.objectImage2;
-        HeartImage[2]= heart.objectImage3;
+        Entity heart= new ObiectHp(gp);
+        HeartImage[0]= heart.jos[0];
+         HeartImage[1]= heart.jos[1];
+         HeartImage[2]= heart.jos[2];
 
 
     }

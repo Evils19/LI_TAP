@@ -8,8 +8,13 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public class Entity {
+//Obiecte
+public BufferedImage objectImage,objectImage2,objectImage3;
+    public String nameObject;
 
 
+
+    //NPC+Player
    protected GamePanel gp;
    public  int IndexS=0;
    public  int IndexJ=0;
@@ -20,16 +25,21 @@ public class Entity {
     String dialog[]=new String[20];
     public  int MaxLife;
     public  int Life;
+    protected int indexDialog=0;
+  protected   int sprintnum=0;
+   protected int sprinterCoutner=0;
+   protected   int sprintnum2=0;
+   protected int sprinterCoutner2=0;
 
 
 
-public BufferedImage objectImage;
+
     public BufferedImage [] sus = new BufferedImage[4];
     public BufferedImage [] jos = new BufferedImage[4];
     public BufferedImage [] stanga = new BufferedImage[4];
     public BufferedImage [] dreapta = new BufferedImage[4];
     public Rectangle coliziune= new Rectangle(10,18,25,25);
-    public String direction="sus";
+    public String direction="jos";
     public  boolean collision = false;
     public  boolean ObjCollision = false;
     public  int actionLockCounter=0;
@@ -132,6 +142,24 @@ objectImage=image;
         SetAcion();
     collision=false;
     StopColiziune();
+        sprinterCoutner++;
+        if (sprinterCoutner>10){
+            if (sprintnum==0) {
+                sprintnum=1;
+            }
+            else if (sprintnum==1){
+                sprintnum=0;
+            }
+            sprinterCoutner=0;
+        }
+
+
+
+
+
+        sprinterCoutner2++;
+
+
 
 
     }
@@ -162,5 +190,25 @@ objectImage=image;
 
     }
 
+
     }
+
+
+
+
+    public  BufferedImage  Setup(String path){
+        BufferedImage image=null;
+        InputStream is= getClass().getResourceAsStream("/Schin/NPC/"+path+".png");
+
+        try {
+            image = ImageIO.read(is);
+        }catch (Exception e){
+            e.printStackTrace();//Afiseaza eroarea in caz ca nu se incarca imaginea
+        }
+
+
+        return image;
+    }
+
+
 }

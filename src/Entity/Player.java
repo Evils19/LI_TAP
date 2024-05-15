@@ -118,7 +118,11 @@ public class Player  extends Entity{
         NPCInteraction(NpcIndex);
 
 
-       ;
+        if (Life<3){
+            speed=2;
+            gp.ui.ShowMessage("Din momentul dat viteza scade de doua ori",Color.RED);
+        }
+
 
 
 
@@ -131,11 +135,19 @@ public class Player  extends Entity{
 
     public  void ObjectInteraction(int index){
         if (index!=999){
-collision=true;
+if (gp.objects[index].nameObject=="Door"){
+    if(Life==MaxLife){
+        Life=1;
+        gp.objects[index]=null;
+    }
+    else {
+        collision=true;
+    }
 
 
-        }
 
+    }
+    }
     }
     public void NPCInteraction(int index){
         if (index!=999){
@@ -170,14 +182,17 @@ public  void draw(Graphics2D g2d){
     jos[1]= objectImage.getSubimage(1*Playerx,0*Playery,Playerx,Playery);
     jos[2]= objectImage.getSubimage(2*Playerx,0*Playery,Playerx,Playery);
     jos[3]= objectImage.getSubimage(3*Playerx,0*Playery,Playerx,Playery);
- stanga[0]= objectImage.getSubimage(0*Playerx,1*Playery,Playerx,Playery);
+
+    stanga[0]= objectImage.getSubimage(0*Playerx,1*Playery,Playerx,Playery);
     stanga[1]= objectImage.getSubimage(1*Playerx,1*Playery,Playerx,Playery);
     stanga[2]= objectImage.getSubimage(2*Playerx,1*Playery,Playerx,Playery);
     stanga[3]= objectImage.getSubimage(3*Playerx,1*Playery,Playerx,Playery);
+
     dreapta[0]= objectImage.getSubimage(0*Playerx,2*Playery,Playerx,Playery);
     dreapta[1]= objectImage.getSubimage(1*Playerx,2*Playery,Playerx,Playery);
     dreapta[2]= objectImage.getSubimage(2*Playerx,2*Playery,Playerx,Playery);
     dreapta[3]= objectImage.getSubimage(3*Playerx,2*Playery,Playerx,Playery);
+
     sus[0]= objectImage.getSubimage(0*Playerx,3*Playery,Playerx,Playery);
     sus[1]= objectImage.getSubimage(1*Playerx,3*Playery,Playerx,Playery);
     sus[2]= objectImage.getSubimage(2*Playerx,3*Playery,Playerx,Playery);
