@@ -6,13 +6,32 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.util.Random;
 
 public class Entity {
 //Obiecte
-public BufferedImage objectImage,objectImage2,objectImage3;
+public BufferedImage objectImage;
+public boolean  Krit=false;
     public String nameObject;
+    public  boolean damage=false;
+    public  boolean Invisible=false;
+    public  int InvisibleCounter=0;
+    protected   boolean  ActionAtack=false;
+    public boolean   Dying=false;
+    public   boolean   Alivie=true;
+    protected  int  DyingCounter=0;
 
+    public boolean  HpBar=false;
+    public int  HpBarCounter=0;
 
+    protected  BufferedImage [] AtackSus = new BufferedImage[2];
+    protected  BufferedImage [] AtackJos = new BufferedImage[2];
+    protected  BufferedImage [] AtackStanga = new BufferedImage[2];
+    protected  BufferedImage [] AtackDreapta = new BufferedImage[2];
+
+    public Rectangle AtackColiziune= new Rectangle(0,0,0,0);
+
+    public boolean Isplayer = false;
 
     //NPC+Player
    protected GamePanel gp;
@@ -23,13 +42,31 @@ public BufferedImage objectImage,objectImage2,objectImage3;
     public  int Worldx, Worldy;
     public  int speed;
     String dialog[]=new String[20];
+    //Haracteristici
     public  int MaxLife;
     public  int Life;
+    public  int Power=1;
+    public  int  Lvl;
+    public  int KritPower=20;
+    public  int  Exp;
+    public int NextLvlExp;
+    public  int Coin;
+    public Entity CurentWeapon;
+    public Entity CurentShield;
+    public int Dexterty;
+    public  int Defance;
+
+    //Caracteristici Item
+    public  int  ItemPower;
+    public  int  ItemKritPower;
+    public int DefenseValue;
+
     protected int indexDialog=0;
   protected   int sprintnum=0;
    protected int sprinterCoutner=0;
    protected   int sprintnum2=0;
    protected int sprinterCoutner2=0;
+   public  int type;//0=player,1=NPC,2=Obiecte,3=Monstr
 
 
 
@@ -83,34 +120,34 @@ public int  Playerx=48,Playery=48;
 
             switch (direction) {
                 case "sus":
-
                     image = sus[IndexS];
                     if (gp.gameState!= gp.MENU_STATE) {
                         IndexS = (IndexS + 1) % 3;// Selectează imaginea corespunzătoare din setul pentru sus
                     }
                         break;
                 case "jos":
-
                     image = jos[IndexJ];// Selectează imaginea corespunzătoare din setul pentru jos
                     if (gp.gameState!= gp.MENU_STATE)   IndexJ=(IndexJ+1)%3;
                     break;
                 case "stanga":
-
                     image = stanga[IndexST]; // Selectează imaginea corespunzătoare din setul pentru stânga
                     if (gp.gameState!= gp.MENU_STATE)   IndexST=(IndexST+1)%3;
                     break;
                 case "dreapta":
-
                     image = dreapta[IndexD]; // Selectează imaginea corespunzătoare din setul pentru dreapta
                     if (gp.gameState!= gp.MENU_STATE)     IndexD=(IndexD+1)%3;
                     break;
             }
-
-
 objectImage=image;
 
 
+
+
+
+
             g2d.drawImage(image, screenX, screenY, gp.titlesize*3/2, gp.titlesize*3/2, null);
+
+
 
 
 
@@ -153,21 +190,44 @@ objectImage=image;
             sprinterCoutner=0;
         }
 
-
-
-
-
         sprinterCoutner2++;
 
 
+        if (Invisible){
+            InvisibleCounter++;
+            if (InvisibleCounter>40){
+                Invisible=false;
+                InvisibleCounter=0;
+            }
 
 
+        }
+
+
+if (gp.dc.ColiziunePlayer(this) && type==3){
+
+
+
+    if (!gp.player.Invisible){
+        gp.player.Life--;
+        gp.player.Invisible=true;}
+}
     }
+
 
 
     public  void StopColiziune(){
         gp.dc.ColiziuneBloc(this);
         gp.dc.ColiziunePlayer(this);
+        gp.dc.ColiziuneNPC(this, gp.Monstr);
+        gp.dc.ColiziuneNPC(this, gp.NPC);
+        int NpcIndex=gp.dc.ColiziuneNPC(this,gp.NPC);
+        NPCInteraction(NpcIndex);
+        //Coliziune Monster
+        int MonsterIndex=gp.dc.ColiziuneNPC(this,gp.Monstr);
+        MonstrInteraction(MonsterIndex);
+        int objIndex=  gp.dc.ColoziuneObiect(this,true);
+        ObjectInteraction(objIndex);
 
     if (!collision){
 
@@ -196,7 +256,7 @@ objectImage=image;
 
 
 
-    public  BufferedImage  Setup(String path){
+    public  BufferedImage SetupNPC(String path){
         BufferedImage image=null;
         InputStream is= getClass().getResourceAsStream("/Schin/NPC/"+path+".png");
 
@@ -209,6 +269,145 @@ objectImage=image;
 
         return image;
     }
+    public  BufferedImage SetupObject(String path){
+        BufferedImage image=null;
+        InputStream is= getClass().getResourceAsStream("/Schin/Object/"+path+".png");
+
+        try {
+            image = ImageIO.read(is);
+        }catch (Exception e){
+            e.printStackTrace();//Afiseaza eroarea in caz ca nu se incarca imaginea
+        }
+
+
+        return image;
+    }
+
+    public BufferedImage SetupMonster(String path){
+        BufferedImage image=null;
+        InputStream is= getClass().getResourceAsStream("/Schin/Monster/"+path+".png");
+
+        try {
+            image = ImageIO.read(is);
+        }catch (Exception e){
+            e.printStackTrace();//Afiseaza eroarea in caz ca nu se incarca imaginea
+        }
+
+        return image;
+
+}
+    public  void ObjectInteraction(int index){
+        if (index!=999){
+          collision=true;
+
+            }
+        }
+
+
+
+    public void NPCInteraction(int index){
+        if (index!=999){
+          collision=true;
+    }
+    }
+
+
+    public void MonstrInteraction(int index){
+        if (index!=999){
+
+            collision=true;
+            if (Isplayer){
+                gp.player.Life--;
+            }
+
+
+
+        }
+    }
+
+
+
+public  void DyingAnimation(Graphics2D g2d){
+        DyingCounter++;
+        if (DyingCounter<=5){
+            ChangeAlpa(g2d,0f);}
+        if ( DyingCounter>5 && DyingCounter<=10){
+            ChangeAlpa(g2d,1f);        }
+        if ( DyingCounter>10 && DyingCounter<=15){
+            ChangeAlpa(g2d,0f);}
+        if ( DyingCounter>15 && DyingCounter<=20){
+            ChangeAlpa(g2d,1f);}
+        if ( DyingCounter>25 && DyingCounter<=30){
+            ChangeAlpa(g2d,0f);}
+        if ( DyingCounter>30 && DyingCounter<=35){
+            ChangeAlpa(g2d,1f);}
+        if ( DyingCounter>35 && DyingCounter<=40){
+            ChangeAlpa(g2d,0f);}
+
+
+    if (DyingCounter>40){
+        Dying=false;
+        Alivie=false;
+        DyingCounter=0;
+        if (type==3){
+            gp.playSE(11);
+        }
+    }
+    }
+    public  void ChangeAlpa(Graphics2D g2d,float alpha){
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
+    }
+
+    public  String DirectionInverso(String direction){
+        switch (direction){
+            case "sus":
+                return "jos";
+            case "jos":
+                return "sus";
+            case "stanga":
+                return "dreapta";
+            case "dreapta":
+                return "stanga";
+        }
+        return null;
+
+    }
+
+
+
+    public int PowerAtak() {
+        int tempPower;
+        Random rand = new Random();
+
+
+        int Rand = rand.nextInt(20);
+
+        if (Rand > 10 && ActionAtack) {
+
+            int AtackKrit = rand.nextInt(100);
+
+
+            tempPower = AtackKrit;
+
+
+            Krit = true;
+            gp.ui.ShowMessage("Krit Atack " + tempPower, Color.WHITE);
+        } else {
+            tempPower = Power;
+
+
+            Krit = false;
+        }
+
+
+        return tempPower;
+    }
+
 
 
 }
+
+
+
+

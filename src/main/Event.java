@@ -38,8 +38,6 @@ boolean canTouchEvent = true;
             canTouchEvent=true;
         }
         if (canTouchEvent){
-            if (hit(27,16,"dreapta")){damagePlayer(27,16,gp.Dialog_STATE);}
-            if (hit(23, 19, "any")) {damagePlayer(27,16,gp.Dialog_STATE);}
             if (hit(23, 12, "any")) {Heal(27,16,gp.Dialog_STATE);}
 
         }

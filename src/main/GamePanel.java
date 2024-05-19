@@ -47,6 +47,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public Entity[] objects = new Entity[10];
 
     public Entity NPC[]= new Entity[10];
+    public Entity Monstr[] = new Entity[20];
     ArrayList<Entity> EntityList = new ArrayList<>();
 
 
@@ -58,12 +59,12 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
     public  final int MENU_STATE = 1;
     public  final int PLAY_STATE = 2;
     public  final int Dialog_STATE = 3;
+    public  final int CHARACTERIC_STATE = 4;
 
 
 
 //____________________________________________________________________________________
   public  JLabel label = new JLabel();
-  public  JLabel label2 = new JLabel();
 
     public GamePanel(){
         this.addKeyListener(keyHandler);
@@ -76,11 +77,16 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
 
 
+
     }
+
+
 
     public  void  setupGame(){
         so.SetObject();
         so.SetNPS();
+        so.SetMonstrs();
+
 
         gameState = ui.TitleState;
         PlaySound(7);
@@ -134,6 +140,21 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
                     NPC[i].update();
                 }
             }
+            for (int i=0;i<Monstr.length;i++){
+                if (Monstr[i]!=null){
+
+
+                    if (Monstr[i].Alivie && !Monstr[i].Dying){
+                        Monstr[i].update();
+                    }
+                    if (!Monstr[i].Alivie){
+                        Monstr[i]=null;
+                    }
+
+                }
+            }
+
+
             player.update();
         }
 
@@ -195,6 +216,11 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
                 }
             }
 
+         for(int i=0;i<Monstr.length;i++){
+             if(Monstr[i]!=null){
+                 EntityList.add(Monstr[i]);
+             }
+         }
             //Sort
             Collections.sort(EntityList,new Comparator<Entity>(){
                 @Override
@@ -208,10 +234,7 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 for (int i=0;i<EntityList.size();i++){
     EntityList.get(i).draw(g2d);
 }
-for (int i=0;i<EntityList.size();i++){
-    EntityList.remove(i);
-}
-
+            EntityList.clear();
 
 
 

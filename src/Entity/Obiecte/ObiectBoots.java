@@ -15,6 +15,7 @@ public class ObiectBoots extends Entity {
             jos[0] = ImageIO.read(getClass().getResourceAsStream("/Schin/Object/boots.png"));
         }
         catch (Exception e){
+
             e.printStackTrace();
         }
 

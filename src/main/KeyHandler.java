@@ -2,11 +2,14 @@ package main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
-public class KeyHandler implements KeyListener {
-public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed, isEnter;
+public class KeyHandler implements KeyListener, MouseListener {
+public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed, isEnter,IsAtack;
 
+    public boolean MiscareMouseStanga = false;
 GamePanel gp;
 
 public KeyHandler(GamePanel gp){
@@ -55,7 +58,9 @@ int code = keyEvent.getKeyCode();
                 }
             }
         }
-
+  if (code ==KeyEvent.VK_P) {
+      IsAtack = true;
+  }
     if (code ==KeyEvent.VK_W){
         MiscareSus = true;
     }
@@ -114,6 +119,9 @@ int code = keyEvent.getKeyCode();
     public void keyReleased(KeyEvent keyEvent) {//Tasta eliberata
         int code = keyEvent.getKeyCode();
 
+        if (code ==KeyEvent.VK_P) {
+            IsAtack = false;
+        }
         if (code ==KeyEvent.VK_W){
             MiscareSus = false;
         }
@@ -135,6 +143,35 @@ int code = keyEvent.getKeyCode();
             // Niciuna dintre taste nu este apăsată
             Hack = false;
         }
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseEvent.BUTTON1) { // BUTTON1 reprezintă butonul stâng al mouse-ului
+            MiscareMouseStanga = true;
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+            MiscareMouseStanga = false;
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
 
     }
 }

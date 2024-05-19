@@ -2,10 +2,8 @@ package Entity;
 
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.util.Random;
 
 public class NPC_Magician extends Entity{
@@ -18,8 +16,11 @@ private BufferedImage Stanga1;
 private BufferedImage Stanga2;
 private BufferedImage Dreapta1;
 private BufferedImage Dreapta2;
+
+
     public NPC_Magician(GamePanel gp) {
         super(gp);
+        nameObject = "Magician";
         direction = "jos";
         speed = 1;
         getPlayerImage();
@@ -34,14 +35,14 @@ private BufferedImage Dreapta2;
     }
 
     public void getPlayerImage(){
-        Sus1 = Setup("oldman_up_1");
-        Sus2 = Setup("oldman_up_2");
-        Jos1 = Setup("oldman_down_1");
-        Jos2 = Setup("oldman_down_2");
-        Stanga1 = Setup("oldman_left_1");
-        Stanga2 = Setup("oldman_left_2");
-        Dreapta1 = Setup("oldman_right_1");
-        Dreapta2 = Setup("oldman_right_2");
+        Sus1 = SetupNPC("oldman_up_1");
+        Sus2 = SetupNPC("oldman_up_2");
+        Jos1 = SetupNPC("oldman_down_1");
+        Jos2 = SetupNPC("oldman_down_2");
+        Stanga1 = SetupNPC("oldman_left_1");
+        Stanga2 = SetupNPC("oldman_left_2");
+        Dreapta1 = SetupNPC("oldman_right_1");
+        Dreapta2 = SetupNPC("oldman_right_2");
 
 
     }
@@ -83,6 +84,9 @@ private BufferedImage Dreapta2;
             return;
         }
         gp.ui.Dialog=dialog[indexDialog];
+        if (indexDialog==1){
+            gp.player.Life=6;
+        }
         indexDialog++;
 
         super.speak();

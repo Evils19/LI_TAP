@@ -17,6 +17,7 @@ public class NPC_Elf extends Entity {
         speed=2;
         Playerx=64;
         Playery=64;
+        coliziune= new Rectangle(10,10,25,40);
 
         importImage("elf");
         GetPplayerImage();
