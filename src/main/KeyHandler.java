@@ -98,10 +98,46 @@ int code = keyEvent.getKeyCode();
     if (code == KeyEvent.VK_C) {
        if (gp.gameState == gp.PLAY_STATE){
            gp.gameState = gp.CHARACTERIC_STATE;
+
        }
        else if (gp.gameState == gp.CHARACTERIC_STATE){
            gp.gameState = gp.PLAY_STATE;
        }
+
+
+    }
+
+    if (gp.gameState == gp.CHARACTERIC_STATE){
+
+            if (code ==KeyEvent.VK_W){
+                if (gp.ui.SlotRow!=0 ){
+                gp.ui.SlotRow--;
+                    gp.playSE(1);
+
+                }
+            }
+            if (code ==KeyEvent.VK_S){
+                if (gp.ui.SlotRow!=3) {
+                    gp.ui.SlotRow++;
+
+                    gp.playSE(1);
+                }
+            }
+            if (code ==KeyEvent.VK_A){
+                if (gp.ui.SlotCol!=0) {
+                    gp.ui.SlotCol--;
+
+                    gp.playSE(1);
+                }
+            }
+            if (code ==KeyEvent.VK_D){
+                if (gp.ui.SlotCol!=4) {
+                    gp.ui.SlotCol++;
+                    gp.playSE(1);
+
+                }
+            }
+
     }
 
     //Menu State

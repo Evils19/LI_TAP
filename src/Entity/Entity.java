@@ -57,10 +57,9 @@ public boolean  Krit=false;
     public  int Defance;
 
     //Caracteristici Item
-    public  int  ItemPower;
-    public  int  ItemKritPower;
     public  int SwordPower;
     public int DefenseValue;
+    public String Description;
 
     protected int indexDialog=0;
   protected   int sprintnum=0;
@@ -215,7 +214,7 @@ if (gp.dc.ColiziunePlayer(this) && type==3){
         gp.playSE(10);
 
 
-        int damge = Power-Defance;
+        int damge = PowerAtak()-gp.player.Defance;
         if (damge<=0){
             damge=0;
         }

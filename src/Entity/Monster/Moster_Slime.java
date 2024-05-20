@@ -24,6 +24,7 @@ public class Moster_Slime extends Entity {
         coliziune.height = 30;
         SolidDefaultX =coliziune.x;
         SolidDefaultY =coliziune.y;
+        Exp=5;
         direction = "dreapta";
             getImage();
     }

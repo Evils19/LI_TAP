@@ -11,9 +11,7 @@ public class Item_Shield extends Entity{
         DefenseValue =5;
         nameObject = "Shield";
         jos[0] =SetupObject("shield_wood");
-        jos[1] =jos[0];
-        jos[2] =jos[0];
-        jos[3] =jos[0];
+        Description = "Scut obisnut optinut prin\nmostenire";
 
     }
 

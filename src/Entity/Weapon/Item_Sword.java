@@ -9,9 +9,8 @@ public class Item_Sword extends Entity {
         nameObject = "Normal_Sword";
         SwordPower = 3;
         jos[0] =SetupObject("sword_normal");
-        jos[1] =jos[0];
-        jos[2] =jos[0];
-        jos[3] =jos[0];
+        Description = "Sabie obisnuta optinuta prin\nmostenire";
+
     }
 
 

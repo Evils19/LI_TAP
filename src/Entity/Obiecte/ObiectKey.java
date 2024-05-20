@@ -10,12 +10,12 @@ public class ObiectKey extends Entity {
     public ObiectKey(GamePanel gp) {
         super(gp);
         nameObject = "Key";
+        Description= "Cheie necunocuta";
       try {
           jos[0] = ImageIO.read(getClass().getResourceAsStream("/Schin/Object/key.png"));
       }
       catch (Exception e){
-          e.printStackTrace();
-      }
+          e.printStackTrace();      }
 
 
 

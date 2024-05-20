@@ -24,6 +24,7 @@ public class Sound {
         SoundURL[9] = getClass().getResource("/Schin/Sound/atack.wav");
         SoundURL[10] = getClass().getResource("/Schin/Sound/hit.wav");
         SoundURL[11] = getClass().getResource("/Schin/Sound/slime_Diad.wav");
+        SoundURL[12] = getClass().getResource("/Schin/Sound/level-up.wav");
     }
 
 public  void SetFile(int i){

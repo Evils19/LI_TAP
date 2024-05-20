@@ -1,5 +1,6 @@
 package Entity;
 
+import Entity.Obiecte.ObiectKey;
 import Entity.Weapon.Item_Shield;
 import Entity.Weapon.Item_Sword;
 import main.GamePanel;
@@ -9,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 
 public class Player  extends Entity{
@@ -29,6 +31,8 @@ public class Player  extends Entity{
     private int josIndex = 0;
     private int stangaIndex = 0;
     private int dreaptaIndex = 0;
+    public ArrayList<Entity> Inventory = new ArrayList<>();
+    public final int InventorySize = 20;
 
     //Poziția pe ecran a jucătorului
     public final  int screenX;
@@ -77,6 +81,7 @@ public class Player  extends Entity{
         Coin=0;
         Dexterty=1;
       Defance = GetDefance();
+        SetItems();
 
 
     }
@@ -135,6 +140,17 @@ public class Player  extends Entity{
                 gp.playSE(9);
                 attackCooldown = 10;
             }
+        }
+
+        if (Exp>=NextLvlExp){
+            gp.playSE(12);
+            Lvl++;
+            Exp=0;
+            NextLvlExp+=NextLvlExp*2;
+            MaxLife+=2;
+            Power+=2;
+            Defance+=1;
+            gp.ui.addMesage("Ai trecut la nivel nou,caracteristicile tale au crescut");
         }
 
 
@@ -375,9 +391,30 @@ if (Invisible){
 
 }
 
+
+public void SetItems(){
+       Inventory.add(CurentWeapon);
+       Inventory.add(CurentShield);
+       Inventory.add(new ObiectKey(gp));
+       Inventory.add(new ObiectKey(gp));
+       Inventory.add(new ObiectKey(gp));
+}
+
+
+
+
 public  void  Invisble(){
     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
 }
+
+
+
+
+
+
+
+
+
 
 
 public void MonstrDamage(int monsterIndex){
@@ -391,13 +428,14 @@ public void MonstrDamage(int monsterIndex){
                 damge=0;
             }
 
-
         gp.Monstr[monsterIndex].Life-=damge;
+        gp.ui.addMesage("Damage "+damge);
         gp.Monstr[monsterIndex].Invisible=true;
         gp.Monstr[monsterIndex].damage=true;
         if (gp.Monstr[monsterIndex].Life<=0){
-            Power+=10;
             gp.Monstr[monsterIndex].Dying=true;
+            Exp+=gp.Monstr[monsterIndex].Exp;
+            gp.ui.addMesage("+Exp "+gp.Monstr[monsterIndex].Exp);
         }
         }
     }
