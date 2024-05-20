@@ -59,6 +59,7 @@ public boolean  Krit=false;
     //Caracteristici Item
     public  int  ItemPower;
     public  int  ItemKritPower;
+    public  int SwordPower;
     public int DefenseValue;
 
     protected int indexDialog=0;
@@ -121,21 +122,21 @@ public int  Playerx=48,Playery=48;
             switch (direction) {
                 case "sus":
                     image = sus[IndexS];
-                    if (gp.gameState!= gp.MENU_STATE) {
+                    if (gp.gameState== gp.PLAY_STATE) {
                         IndexS = (IndexS + 1) % 3;// Selectează imaginea corespunzătoare din setul pentru sus
                     }
                         break;
                 case "jos":
                     image = jos[IndexJ];// Selectează imaginea corespunzătoare din setul pentru jos
-                    if (gp.gameState!= gp.MENU_STATE)   IndexJ=(IndexJ+1)%3;
+                    if (gp.gameState== gp.PLAY_STATE)   IndexJ=(IndexJ+1)%3;
                     break;
                 case "stanga":
                     image = stanga[IndexST]; // Selectează imaginea corespunzătoare din setul pentru stânga
-                    if (gp.gameState!= gp.MENU_STATE)   IndexST=(IndexST+1)%3;
+                    if (gp.gameState== gp.PLAY_STATE)   IndexST=(IndexST+1)%3;
                     break;
                 case "dreapta":
                     image = dreapta[IndexD]; // Selectează imaginea corespunzătoare din setul pentru dreapta
-                    if (gp.gameState!= gp.MENU_STATE)     IndexD=(IndexD+1)%3;
+                    if (gp.gameState== gp.PLAY_STATE)     IndexD=(IndexD+1)%3;
                     break;
             }
 objectImage=image;
@@ -209,7 +210,16 @@ if (gp.dc.ColiziunePlayer(this) && type==3){
 
 
     if (!gp.player.Invisible){
-        gp.player.Life--;
+
+
+        gp.playSE(10);
+
+
+        int damge = Power-Defance;
+        if (damge<=0){
+            damge=0;
+        }
+        gp.player.Life-=damge;
         gp.player.Invisible=true;}
 }
     }

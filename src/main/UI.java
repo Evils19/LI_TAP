@@ -121,6 +121,11 @@ drawTitle();
             drawHpPlayer();
             drawDialog();
         }
+        if (gp.gameState==gp.CHARACTERIC_STATE){
+            drawCharactericScreen();
+
+
+        }
 
 
     }
@@ -287,7 +292,64 @@ public  void  drawSubWindow(int x,int y,int width,int height) {
     }
 
 
+    public void  drawCharactericScreen(){
+    final int frameX=gp.titlesize*2;
+    final int frameY=gp.titlesize*2;
+    final int frameWidth=gp.titlesize*5;
+    final int frameHeight=gp.titlesize*8;
+    drawSubWindow(frameX,frameY,frameWidth,frameHeight);
 
+    g2d.setColor(Color.WHITE);
+    g2d.setFont(g2d.getFont().deriveFont(19F));
+
+    int textX=frameX+20;
+    int textY=frameY+gp.titlesize;
+    final  int LineHeight=36;
+
+    g2d.drawString("Nivel: "+gp.player.Lvl,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Hp: "+gp.player.Life+" / "+gp.player.MaxLife,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Protectie: "+gp.player.Defance+" / "+gp.player.MaxLife,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Forta: "+gp.player.Power,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Crit: "+gp.player.Krit,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Exp: "+gp.player.Exp,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Experienta + LVL: "+gp.player.NextLvlExp,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Aur: "+gp.player.Coin,textX,textY);
+    textY+=LineHeight;
+    g2d.drawString("Arma: ",textX,textY);
+    g2d.drawImage(gp.player.CurentWeapon.jos[0],textX+100,textY-28,40,40,null);
+    textY+=LineHeight;
+    g2d.drawString("Scut: ",textX,textY);
+    g2d.drawImage(gp.player.CurentShield.jos[0],textX+100,textY-28,40,40,null);
+    textY+=LineHeight;
+
+
+    //
+
+
+
+    int TailX=(frameX-frameWidth-30);
+    textY=frameY+gp.titlesize;
+    String value;
+    value=String.valueOf(gp.player.Lvl);
+    textX=getXforAlingnToRight(value,TailX);
+    g2d.drawString(value,textX,textY);
+
+    }
+
+
+
+    public int getXforAlingnToRight(String text,int Talix){
+        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        return Talix-length;
+
+}
 }
 
 
@@ -302,63 +364,3 @@ public  void  drawSubWindow(int x,int y,int width,int height) {
 
 
 
-
-    //Versiunea veche in cautarea de comoara
-//    public  void draw(Graphics2D g2d) {
-//
-//        if (GameOver) {
-//            g2d.setFont(arial_40);
-//            g2d.setColor(Color.WHITE);
-//            String text = "Game Over";
-//            int textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
-//            int x = gp.screenWidth / 2 - textLength / 2;
-//            int y = gp.screenHeight / 2- gp.titlesize*3;
-//
-//            g2d.drawString(text, x, y);
-//
-//            g2d.setFont(arial_80B);
-//            g2d.setColor(Color.GREEN);
-//            text="Felicitari!";
-//            textLength = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
-//            x = gp.screenWidth / 2 - textLength / 2;
-//            y = gp.screenHeight / 2;
-//            g2d.drawString(text, x, y);
-//
-//
-//            g2d.setFont(new Font("Arial", Font.PLAIN, 40));
-//            g2d.setColor(Color.WHITE);
-//            text="Timpul de trecere: "+String.format("%.2f", playTime);
-//            x = gp.screenWidth / 2 - textLength / 2;
-//            y = gp.screenHeight / 2;
-//            g2d.drawString(text, x, y+gp.titlesize*4);
-//            gp.StopSound();
-//            gp.gamethread=null;
-//
-//
-//        } else {
-//
-//
-//            g2d.setFont(arial_40);
-//            g2d.setColor(Color.WHITE);
-////            g2d.drawImage(keyImage, gp.titlesize / 2, 20, gp.titlesize / 2, gp.titlesize / 2, null);
-////            g2d.drawString("x " + gp.player.NrChei, 50, 40);
-//
-//            playTime+=(double)1/60;
-//            g2d.drawString("Timp: "+(int)playTime, gp.titlesize*14, 65);
-//            if (messageOn) {
-//
-//                g2d.setColor(colorMessage);
-//                g2d.setFont(g2d.getFont().deriveFont(20.0f));
-//                g2d.drawString(message, 50, 80);
-//
-//                messageTime++;
-//                if (messageTime > 100) {
-//                    messageOn = false;
-//                    messageTime = 0;
-//
-//                }
-//            }
-//        }
-//    }
-//
-//}

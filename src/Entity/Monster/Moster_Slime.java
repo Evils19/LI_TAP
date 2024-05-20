@@ -17,6 +17,7 @@ public class Moster_Slime extends Entity {
         speed = 1;
         MaxLife = 4;
         Life = MaxLife;
+        Defance=4;
         coliziune.x = 3;
         coliziune.y = 18;
         coliziune.width = 42;

@@ -6,7 +6,7 @@ public class Item_Shield extends Entity{
 
 
 
-    Item_Shield(GamePanel gp){
+    public Item_Shield(GamePanel gp){
         super(gp);
         DefenseValue =5;
         nameObject = "Shield";

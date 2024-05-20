@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
-public class KeyHandler implements KeyListener, MouseListener {
+public class KeyHandler implements KeyListener {
 public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed, isEnter,IsAtack;
 
     public boolean MiscareMouseStanga = false;
@@ -22,9 +22,8 @@ public KeyHandler(GamePanel gp){
     public void keyPressed(KeyEvent keyEvent) {//Apasa tasta
 int code = keyEvent.getKeyCode();
 
-//State Title
-        if(gp.gameState==gp.ui.TitleState){
-
+//State Titlew
+    if(gp.gameState==gp.ui.TitleState){
 
             if (code ==KeyEvent.VK_W){
               gp.ui.ComandNumber--;
@@ -41,8 +40,8 @@ int code = keyEvent.getKeyCode();
                     gp.ui.ComandNumber=0;
 
                 }
-
             }
+
             if (code == KeyEvent.VK_ENTER){
 
                 if (gp.ui.ComandNumber==0){
@@ -58,6 +57,7 @@ int code = keyEvent.getKeyCode();
                 }
             }
         }
+        //Play State
   if (code ==KeyEvent.VK_P) {
       IsAtack = true;
   }
@@ -94,6 +94,17 @@ int code = keyEvent.getKeyCode();
         Hack = true;
     }
 
+    //Characteic State
+    if (code == KeyEvent.VK_C) {
+       if (gp.gameState == gp.PLAY_STATE){
+           gp.gameState = gp.CHARACTERIC_STATE;
+       }
+       else if (gp.gameState == gp.CHARACTERIC_STATE){
+           gp.gameState = gp.PLAY_STATE;
+       }
+    }
+
+    //Menu State
     if (code == KeyEvent.VK_ESCAPE) {
         if (gp.gameState == gp.PLAY_STATE){
             gp.gameState = gp.MENU_STATE;
@@ -103,11 +114,8 @@ int code = keyEvent.getKeyCode();
         }
 
     }
-
-
-
 //Daca este in dialog si apasam enter
-        if (gp.gameState == gp.Dialog_STATE){
+    if (gp.gameState == gp.Dialog_STATE){
             if (code==KeyEvent.VK_ENTER){
                 gp.gameState = gp.PLAY_STATE;
 
@@ -146,32 +154,4 @@ int code = keyEvent.getKeyCode();
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseEvent.BUTTON1) { // BUTTON1 reprezintă butonul stâng al mouse-ului
-            MiscareMouseStanga = true;
-        }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
-            MiscareMouseStanga = false;
-        }
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
 }

@@ -1,5 +1,6 @@
 package Entity;
 
+import Entity.Weapon.Item_Shield;
 import Entity.Weapon.Item_Sword;
 import main.GamePanel;
 import main.KeyHandler;
@@ -63,8 +64,10 @@ public class Player  extends Entity{
         Worldx = gp.titlesize*23;
         Worldy = gp.titlesize*21;
         //Caracteristici
+        CurentWeapon=new Item_Sword(gp);
+        CurentShield=new Item_Shield(gp);
         Lvl=1;
-        Power=3;
+        Power=GetAtack();
         MaxLife=6;
         Life=MaxLife;
         speed=4;
@@ -72,9 +75,9 @@ public class Player  extends Entity{
         Exp=0;
         NextLvlExp=10;
         Coin=0;
-        Defance = GetDefance();
-        CurentWeapon=new Item_Sword(gp);
-        CurentShield=new Item_Sword(gp);
+        Dexterty=1;
+      Defance = GetDefance();
+
 
     }
     private int attackCooldown = 0;
@@ -82,6 +85,9 @@ public class Player  extends Entity{
 
     public int GetDefance(){
         return Dexterty*CurentShield.DefenseValue;
+    }
+    public  int GetAtack(){
+        return Power+CurentWeapon.SwordPower;
     }
     public void update() {
 
@@ -248,7 +254,14 @@ if (gp.objects[index].nameObject=="Door"){
         if (index!=999){
 
             if (!Invisible){
-                Life--;
+                gp.playSE(10);
+
+
+                int damge = gp.Monstr[index].PowerAtak()-Defance;
+                if (damge<=0){
+                    damge=0;
+                }
+                Life-=damge;
                 damage=true;
                 Invisible=true;
 
@@ -372,7 +385,14 @@ public void MonstrDamage(int monsterIndex){
         gp.Monstr[monsterIndex].direction=DirectionInverso(direction);
         if (!gp.Monstr[monsterIndex].Invisible){
             gp.playSE(10);
-        gp.Monstr[monsterIndex].Life-=PowerAtak();
+
+            int damge = PowerAtak()- gp.Monstr[monsterIndex].Defance;
+            if (damge<=0){
+                damge=0;
+            }
+
+
+        gp.Monstr[monsterIndex].Life-=damge;
         gp.Monstr[monsterIndex].Invisible=true;
         gp.Monstr[monsterIndex].damage=true;
         if (gp.Monstr[monsterIndex].Life<=0){
