@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 
 public class KeyHandler implements KeyListener {
-public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed, isEnter,IsAtack;
+public boolean MiscareSus, MiscareJos, MiscareStanga, MiscareDreapta,Hack,isXPressed, isEPressed, isEnter,IsAtack,IsFire;
 
     public boolean MiscareMouseStanga = false;
 GamePanel gp;
@@ -86,6 +86,9 @@ int code = keyEvent.getKeyCode();
         isXPressed = true;
     } else if (code == KeyEvent.VK_E) {
         isEPressed = true;
+    }
+    if (code == KeyEvent.VK_F) {
+        IsFire = true;
     }
 
 
@@ -186,6 +189,10 @@ int code = keyEvent.getKeyCode();
         } else if (code == KeyEvent.VK_E) {
             isEPressed = false;
         }
+        if (code == KeyEvent.VK_F) {
+            IsFire = false;
+        }
+
         if (!isXPressed && !isEPressed) {
             // Niciuna dintre taste nu este apăsată
             Hack = false;

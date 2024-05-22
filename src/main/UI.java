@@ -2,6 +2,7 @@ package main;
 
 import Entity.Entity;
 import Entity.Obiecte.ObiectHp;
+import Entity.Obiecte.ObiectManaCristal;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class UI {
     private  Graphics2D g2d;
     Font arial_40, arial_80B;
     BufferedImage HeartImage[]  = new BufferedImage[3];
+    BufferedImage ManaImage[] = new BufferedImage[2];
 
     ArrayList<String> messages = new ArrayList<>();
     ArrayList<Integer> mesageCounter = new ArrayList<>();
@@ -76,6 +78,11 @@ private Color colorMessage=Color.WHITE;
         HeartImage[0]= heart.jos[0];
          HeartImage[1]= heart.jos[1];
          HeartImage[2]= heart.jos[2];
+
+         Entity mana = new ObiectManaCristal(gp);
+            ManaImage[0]=mana.jos[0];
+            ManaImage[1]=mana.jos[1];
+
 
 
     }
@@ -166,8 +173,29 @@ while (i<gp.player.Life){
 
 }
 
+        x=gp.titlesize/2;
+        y=gp.titlesize;
+        i=0;
+        while (i<gp.player.maxMna){
+            g2d.drawImage(ManaImage[0],x,y,gp.titlesize/2,gp.titlesize/2,null);
+            i++;
+            x+=35;
+
+        }
+        x=gp.titlesize/2;
+        y=gp.titlesize;
+        i=0;
+
+        while (i<gp.player.Mna){
+            g2d.drawImage(ManaImage[1],x,y,gp.titlesize/2,gp.titlesize/2,null);
+            i++;
+            x+=35;
+
 
     }
+    }
+
+
 
 public  void  drawTitle(){
     g2d.setFont(customFont.deriveFont(Font.BOLD,70.0f));
@@ -326,7 +354,7 @@ public  void  drawSubWindow(int x,int y,int width,int height) {
     textY+=LineHeight;
     g2d.drawString("Forta: "+gp.player.Power,textX,textY);
     textY+=LineHeight;
-    g2d.drawString("Crit: "+gp.player.Krit,textX,textY);
+    g2d.drawString("Mana: "+gp.player.Mna+"/"+gp.player.maxMna,textX,textY);
     textY+=LineHeight;
     g2d.drawString("Exp: "+gp.player.Exp,textX,textY);
     textY+=LineHeight;

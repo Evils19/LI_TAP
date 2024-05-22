@@ -1,6 +1,7 @@
 package Entity.Monster;
 
 import Entity.Entity;
+import Entity.Magic.Rock;
 import main.GamePanel;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class Moster_Slime extends Entity {
         super(gp);
         nameObject = "Green Slime";
         type=type_monstr;
+        projectile= new Rock(gp);
         speed = 1;
         MaxLife = 4;
         Life = MaxLife;
@@ -24,6 +26,7 @@ public class Moster_Slime extends Entity {
         coliziune.height = 30;
         SolidDefaultX =coliziune.x;
         SolidDefaultY =coliziune.y;
+
         Exp=5;
         NextLvlExp=10;
         direction = "dreapta";
@@ -83,7 +86,12 @@ public class Moster_Slime extends Entity {
                     this.direction="dreapta";
                 }
                 actionLockCounter=0;
+
+
+
+
         }
+
 
     }
     public void draw(Graphics2D g2d){

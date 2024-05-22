@@ -12,7 +12,15 @@ public class Entity {
 //Obiecte
 public BufferedImage objectImage;
 public boolean  Krit=false;
+
+//Magic Power____________________________________________________________________________
+     public int maxMna;
+    public int Mna;
+    public int  useCost;
     public String nameObject;
+  public  Projectile projectile;
+    public int FireCounter=0;
+  //_____________________________________________________________________________________
     public  boolean damage=false;
     public  boolean Invisible=false;
     public  int InvisibleCounter=0;
@@ -20,6 +28,7 @@ public boolean  Krit=false;
     public boolean   Dying=false;
     public   boolean   Alivie=true;
     protected  int  DyingCounter=0;
+    protected  int CritRate=20;
 
     public boolean  HpBar=false;
     public int  HpBarCounter=0;
@@ -222,7 +231,7 @@ if (gp.dc.ColiziunePlayer(this) && type==type_monstr){
         gp.playSE(10);
 
 
-        int damge = PowerAtak()-gp.player.Defance;
+        int damge = PowerAtak(Power)-gp.player.Defance;
         if (damge<=0){
             damge=0;
         }
@@ -313,6 +322,21 @@ if (gp.dc.ColiziunePlayer(this) && type==type_monstr){
         return image;
 
 }
+
+
+    public BufferedImage Fire(String path){
+        BufferedImage image=null;
+        InputStream is= getClass().getResourceAsStream("/Schin/Projectile/"+path+".png");
+
+        try {
+            image = ImageIO.read(is);
+        }catch (Exception e){
+            e.printStackTrace();//Afiseaza eroarea in caz ca nu se incarca imaginea
+        }
+
+        return image;
+
+    }
     public  void ObjectInteraction(int index){
         if (index!=999){
           collision=true;
@@ -411,14 +435,14 @@ public  void DyingAnimation(Graphics2D g2d){
 
 
 
-    public int PowerAtak() {
+    public int PowerAtak(int Power) {
         int tempPower;
         Random rand = new Random();
 
 
-        int Rand = rand.nextInt(20);
+        int Rand = rand.nextInt(CritRate,101);
 
-        if (Rand >= 16 && ActionAtack) {
+        if (Rand >= 85  && ActionAtack) {
 
             int AtackKrit = rand.nextInt(20,100);
 

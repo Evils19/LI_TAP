@@ -41,13 +41,14 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
   public   KeyHandler keyHandler = new KeyHandler(this);
 
     public  DetectorColision dc = new DetectorColision(this);
-   public Player player = new Player(this,keyHandler);
+   public Player player = new  Player(this,keyHandler);
     TileManager tm = new TileManager(this);
   public   SetObject so = new SetObject(this);
     public Entity[] objects = new Entity[10];
 
     public Entity NPC[]= new Entity[10];
     public Entity Monstr[] = new Entity[20];
+    public ArrayList<Entity> ProjectileList = new ArrayList<>();
     ArrayList<Entity> EntityList = new ArrayList<>();
 
 
@@ -153,6 +154,16 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
 
                 }
             }
+            for(int i=0;i<ProjectileList.size();i++){
+                if(ProjectileList.get(i)!=null){
+                    if (ProjectileList.get(i).Alivie){
+                        ProjectileList.get(i).update();
+                    }
+                    if (!ProjectileList.get(i).Alivie){
+                       ProjectileList.remove(i);
+                    }
+                }
+            }
 
 
             player.update();
@@ -221,6 +232,13 @@ final int scale = 3;//Este scara cu care marim jocul 16*3=48
                  EntityList.add(Monstr[i]);
              }
          }
+         for (int i=0;i<ProjectileList.size();i++){
+                 if (ProjectileList.get(i)!=null){
+                      EntityList.add(ProjectileList.get(i));
+                 }
+                }
+
+
             //Sort
             Collections.sort(EntityList,new Comparator<Entity>(){
                 @Override

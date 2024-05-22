@@ -1,5 +1,6 @@
 package Entity;
 
+import Entity.Magic.FireBall;
 import Entity.Obiecte.ObiectKey;
 import Entity.Weapon.Item_Shield;
 import Entity.Weapon.Item_Sword;
@@ -26,9 +27,11 @@ public class Player  extends Entity{
 
 
 
+    private int ManaGeneration=0;
     private int susIndex = 0;
     private int josIndex = 0;
     private int stangaIndex = 0;
+
     private int dreaptaIndex = 0;
     public ArrayList<Entity> Inventory = new ArrayList<>();
     public final int InventorySize = 20;
@@ -44,6 +47,8 @@ public class Player  extends Entity{
         keyHandler = kh;
         screenX = this.gp.screenWidth/2- this.gp.titlesize/2;
         screenY = this.gp.screenHeight/2- this.gp.titlesize/2;
+        maxMna=4;
+        Mna=maxMna;
         coliziune= new Rectangle(10,18,25,25);
         SolidDefaultX=coliziune.x;
         SolidDefaultY=coliziune.y;
@@ -70,9 +75,11 @@ public class Player  extends Entity{
         //Caracteristici
         CurentWeapon=new Item_Sword(gp);
         CurentShield=new Item_Shield(gp);
+        projectile=new FireBall(gp);
         Lvl=1;
         Power=GetAtack();
         MaxLife=6;
+        CritRate=30;
         Life=MaxLife;
         speed=4;
         KritPower=20;
@@ -94,6 +101,11 @@ public class Player  extends Entity{
     public  int GetAtack(){
         return Power+CurentWeapon.SwordPower;
     }
+
+
+
+
+
     public void update() {
 
 
@@ -149,6 +161,7 @@ public class Player  extends Entity{
             NextLvlExp+=NextLvlExp+(NextLvlExp*NextLvlExp)/50;
             MaxLife+=2;
             Power+=2;
+            projectile.Power+=2;
             Defance+=1;
             gp.ui.addMesage("Ai trecut la nivel nou,caracteristicile tale au crescut");
         }
@@ -196,6 +209,28 @@ public class Player  extends Entity{
 
 //             gp.label.setText("Cordonata x "+Worldx+"Cordonata y "+Worldy);
 
+int Consum=Mna- projectile.useCost;
+        if (gp.keyHandler.IsFire && !projectile.Alivie && FireCounter>=30 && Consum>=0){
+
+            projectile.set(Worldx,Worldy,direction,true,this);
+            gp.ProjectileList.add(projectile);
+            Mna-=projectile.useCost;
+            FireCounter=0;
+        }
+
+
+        if (FireCounter<30){
+            FireCounter++;
+        }
+
+        if (Mna<maxMna){
+            ManaGeneration++;
+            if (ManaGeneration>=160){
+                Mna++;
+                ManaGeneration=0;
+            }
+        }
+
         //Event
         gp.event.checkEvent();
 
@@ -223,13 +258,17 @@ public class Player  extends Entity{
         if (Life>3){
             speed=4;
         }
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -275,11 +314,11 @@ else {
     public void MonstrInteraction(int index){
         if (index!=999){
 
-            if (!Invisible){
+            if (!Invisible && !gp.Monstr[index].Dying){
                 gp.playSE(10);
 
 
-                int damge = gp.Monstr[index].PowerAtak()-Defance;
+                int damge = gp.Monstr[index].PowerAtak(gp.Monstr[index].Power)-Defance;
                 gp.Monstr[index].direction=DirectionInverso(direction);
                 if (damge<=0){
                     damge=0;
@@ -445,7 +484,7 @@ public void MonstrDamage(int monsterIndex){
         if (!gp.Monstr[monsterIndex].Invisible){
             gp.playSE(10);
 
-            int damge = PowerAtak()- gp.Monstr[monsterIndex].Defance;
+            int damge = PowerAtak(Power)- gp.Monstr[monsterIndex].Defance;
             if (damge<=0){
                 damge=0;
             }
@@ -463,6 +502,32 @@ public void MonstrDamage(int monsterIndex){
     }
 
 }
+
+
+    public void MonstrDamageMagic(int monsterIndex,int Power){
+        if (monsterIndex!=999){
+            gp.Monstr[monsterIndex].direction=DirectionInverso(direction);
+            if (!gp.Monstr[monsterIndex].Invisible){
+                gp.playSE(10);
+
+                int damge = PowerAtak(Power)- gp.Monstr[monsterIndex].Defance;
+                if (damge<=0){
+                    damge=0;
+                }
+
+                gp.Monstr[monsterIndex].Life-=damge;
+                gp.ui.addMesage("Damage "+damge);
+                gp.Monstr[monsterIndex].Invisible=true;
+                gp.Monstr[monsterIndex].damage=true;
+                if (gp.Monstr[monsterIndex].Life<=0){
+                    gp.Monstr[monsterIndex].Dying=true;
+                    Exp+=gp.Monstr[monsterIndex].Exp;
+                    gp.ui.addMesage("+Exp "+gp.Monstr[monsterIndex].Exp);
+                }
+            }
+        }
+
+    }
 
 
 
