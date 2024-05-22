@@ -414,7 +414,14 @@ public void drawNewMessage(){
 
         //Draw Object Ibentory
         for (int i=0;i<gp.player.Inventory.size();i++){
+
+
+            if(gp.player.Inventory.get(i)==gp.player.CurentWeapon || gp.player.Inventory.get(i)==gp.player.CurentShield){
+                g2d.setColor(new Color(245, 171, 10, 255));
+                g2d.fillRoundRect(slotX,slotY,gp.titlesize,gp.titlesize,10,10);
+            }
             g2d.drawImage(gp.player.Inventory.get(i).jos[0],slotX,slotY,gp.titlesize,gp.titlesize,null);
+
             slotX+=slotSize;
 
             if (i==4 || i==9 || i==14){

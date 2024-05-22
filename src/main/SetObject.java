@@ -5,7 +5,11 @@ import Entity.NPC_Gargulia;
 import Entity.NPC_Elf;
 import Entity.NPC_Magician;
 import Entity.Obiecte.ObiectDoor;
+import Entity.Obiecte.ObiectKey;
+import Entity.Obiecte.ObiectPotionRed;
 import Entity.Obiecte.ObiectSukune;
+import Entity.Weapon.Item_ShiedBlue;
+import Entity.Weapon.Item_Topor;
 
 public class SetObject {
     GamePanel gp;
@@ -16,19 +20,40 @@ public class SetObject {
 
 
     public  void SetObject(){
+int i =0;
+//        gp.objects[i]=new ObiectDoor(gp);
+//        gp.objects[i].Worldx=21*gp.titlesize;
+//        gp.objects[i].Worldy=21*gp.titlesize;
+//        i++;
 
-        gp.objects[0]=new ObiectDoor(gp);
-        gp.objects[0].Worldx=21*gp.titlesize;
-        gp.objects[0].Worldy=21*gp.titlesize;
+        gp.objects[i]=new ObiectKey(gp);
+        gp.objects[i].Worldx=25*gp.titlesize;
+        gp.objects[i].Worldy=23*gp.titlesize;
+        i++;
+        gp.objects[i]=new ObiectKey(gp);
+        gp.objects[i].Worldx=21*gp.titlesize;
+        gp.objects[i].Worldy=19*gp.titlesize;
+        i++;
+        gp.objects[i]=new ObiectKey(gp);
+        gp.objects[i].Worldx=26*gp.titlesize;
+        gp.objects[i].Worldy=21*gp.titlesize;
+        i++;
+
+        gp.objects[i]=new Item_ShiedBlue(gp);
+        gp.objects[i].Worldx=30*gp.titlesize;
+        gp.objects[i].Worldy=21*gp.titlesize;
+        i++;
+        gp.objects[i]=new Item_Topor(gp);
+        gp.objects[i].Worldx=31*gp.titlesize;
+        gp.objects[i].Worldy=21*gp.titlesize;
+        i++;
+
+        gp.objects[i]=new ObiectPotionRed(gp);
+        gp.objects[i].Worldx=32*gp.titlesize;
+        gp.objects[i].Worldy=21*gp.titlesize;
+
 
 }
-    public  void SetObject(int i){
-
-        gp.objects[i]=new ObiectDoor(gp);
-        gp.objects[i].Worldx=gp.player.Worldx+gp.titlesize;
-        gp.objects[i].Worldy=gp.player.Worldy+gp.titlesize;
-
-    }
 
 
 
@@ -74,11 +99,11 @@ public  void SetMonstrs(){
     gp.Monstr[4].Worldy=35*gp.titlesize;
 
     gp.Monstr[5]= new Moster_Slime(gp);
-    gp.Monstr[5].Worldx=23*gp.titlesize;
-    gp.Monstr[5].Worldy=37*gp.titlesize;
+    gp.Monstr[5].Worldx=21*gp.titlesize;
+    gp.Monstr[5].Worldy=39*gp.titlesize;
 
     gp.Monstr[6]= new Moster_Slime(gp);
-    gp.Monstr[6].Worldx=23*gp.titlesize;
+    gp.Monstr[6].Worldx=20*gp.titlesize;
     gp.Monstr[6].Worldy=38*gp.titlesize;
 
     gp.Monstr[7]= new Moster_Slime(gp);

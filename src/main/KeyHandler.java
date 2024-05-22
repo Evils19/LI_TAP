@@ -137,6 +137,9 @@ int code = keyEvent.getKeyCode();
 
                 }
             }
+            if(code== keyEvent.VK_ENTER){
+                gp.player.selectItem();
+            }
 
     }
 

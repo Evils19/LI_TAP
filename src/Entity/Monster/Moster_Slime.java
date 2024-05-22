@@ -13,7 +13,7 @@ public class Moster_Slime extends Entity {
     public Moster_Slime(GamePanel gp) {
         super(gp);
         nameObject = "Green Slime";
-        type=3;
+        type=type_monstr;
         speed = 1;
         MaxLife = 4;
         Life = MaxLife;
@@ -25,6 +25,7 @@ public class Moster_Slime extends Entity {
         SolidDefaultX =coliziune.x;
         SolidDefaultY =coliziune.y;
         Exp=5;
+        NextLvlExp=10;
         direction = "dreapta";
             getImage();
     }

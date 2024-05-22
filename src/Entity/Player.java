@@ -24,8 +24,7 @@ public class Player  extends Entity{
     private int Playery=64;
 
 
-  public   int temppotionx = Worldx;
-    public  int temppotiony = Worldy;
+
 
     private int susIndex = 0;
     private int josIndex = 0;
@@ -52,6 +51,7 @@ public class Player  extends Entity{
         AtackColiziune.height=36;
         setDefaultPosition();
         importImage();
+        SetItems();
 
 
     }
@@ -81,7 +81,7 @@ public class Player  extends Entity{
         Coin=0;
         Dexterty=1;
       Defance = GetDefance();
-        SetItems();
+
 
 
     }
@@ -145,8 +145,8 @@ public class Player  extends Entity{
         if (Exp>=NextLvlExp){
             gp.playSE(12);
             Lvl++;
-            Exp=0;
-            NextLvlExp+=NextLvlExp*2;
+            Exp=Exp-NextLvlExp;
+            NextLvlExp+=NextLvlExp+(NextLvlExp*NextLvlExp)/50;
             MaxLife+=2;
             Power+=2;
             Defance+=1;
@@ -218,7 +218,7 @@ public class Player  extends Entity{
                 }
         if (Life<=0){
             gp.ui.ShowMessage("Ai murit",Color.RED);
-            setDefaultPosition();
+           Dead();
         }
         if (Life>3){
             speed=4;
@@ -235,16 +235,22 @@ public class Player  extends Entity{
 
     public  void ObjectInteraction(int index){
         if (index!=999){
-if (gp.objects[index].nameObject=="Door"){
-    if(Life==MaxLife){
-        Life=1;
-        Invisible=true;
+
+if (Inventory.size()!=InventorySize){
+
+
+        Inventory.add(gp.objects[index]);
+    gp.playSE(1);
         gp.objects[index]=null;
-        gp.ui.ShowMessage("Din momentul dat viteza scade de doua ori",Color.RED);
-    }
-    else {
-        collision=true;
-    }}}}
+        gp.ui.addMesage("Ai gasit "+Inventory.get(Inventory.size()-1).nameObject);
+}
+else {
+    gp.ui.addMesage("Inventarul este plin");
+}
+
+
+
+        }}
     public void NPCInteraction(int index){
         if (index!=999){
             gp.ui.ShowMessage("Apasa Enter pentru a vorbi",Color.WHITE);
@@ -274,12 +280,30 @@ if (gp.objects[index].nameObject=="Door"){
 
 
                 int damge = gp.Monstr[index].PowerAtak()-Defance;
+                gp.Monstr[index].direction=DirectionInverso(direction);
                 if (damge<=0){
                     damge=0;
+
                 }
                 Life-=damge;
                 damage=true;
                 Invisible=true;
+                if (Life<=0){
+                    gp.ui.ShowMessage("Ai murit",Color.RED);
+                Dead();
+
+                    gp.Monstr[index].Exp+=Exp;
+                    if (Exp>=NextLvlExp){
+                        Lvl++;
+                        NextLvlExp+=NextLvlExp*2;
+                        MaxLife+=2;
+                        Power+=2;
+                        Defance+=1;
+                        gp.ui.addMesage("Moster Lvl Up");
+
+
+                }
+                }
 
             }
 
@@ -395,9 +419,7 @@ if (Invisible){
 public void SetItems(){
        Inventory.add(CurentWeapon);
        Inventory.add(CurentShield);
-       Inventory.add(new ObiectKey(gp));
-       Inventory.add(new ObiectKey(gp));
-       Inventory.add(new ObiectKey(gp));
+    ;
 }
 
 
@@ -439,6 +461,37 @@ public void MonstrDamage(int monsterIndex){
         }
         }
     }
+
+}
+
+
+
+public  void selectItem(){
+        int itemIndex=gp.ui.getItemIndexOnSlot();
+        if(itemIndex < InventorySize){
+            Entity selectedItem = Inventory.get(itemIndex);
+
+            if (selectedItem.type==type_Sword || selectedItem.type==type_Axe){
+                CurentWeapon=selectedItem;
+                Power=GetAtack();
+        }
+
+            if(selectedItem.type==type_Shield){
+                CurentShield=  selectedItem;
+                Defance=GetDefance();
+            }
+            if (selectedItem.type==type_Consumable){
+                selectedItem.Consumable(this);
+                Inventory.remove(itemIndex);
+            }
+}
+
+}
+
+public  void Dead(){
+    Worldx = gp.titlesize*23;
+    Worldy = gp.titlesize*21;
+    Life=MaxLife;
 
 }
 

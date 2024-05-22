@@ -1,4 +1,4 @@
-package Entity.Obiecte;
+package Entity.Weapon;
 
 import Entity.Entity;
 import main.GamePanel;
@@ -7,20 +7,22 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ObiectKey extends Entity {
+public class Item_Topor extends Entity {
     private BufferedImage Jos;
-    public ObiectKey(GamePanel gp) {
+    public Item_Topor(GamePanel gp) {
         super(gp);
-        nameObject = "Key";
-        Description= "Cheie necunocuta";
-      try {
-          this.Jos = ImageIO.read(getClass().getResourceAsStream("/Schin/Object/key.png"));
-          jos[0] = Jos;
-      }
-      catch (Exception e){
-          e.printStackTrace();      }
+        nameObject = "Toporul Metalic";
+        Description= "Topor de lupta";
+        SwordPower = 5;
+        try {
+            this.Jos = ImageIO.read(getClass().getResourceAsStream("/Schin/Object/axe.png"));
+            jos[0] = Jos;
+        }
+        catch (Exception e){
+            e.printStackTrace();      }
 
 
+        type=type_Axe;
         collision = true;
         coliziune.x = 0;
         coliziune.y = 16;
@@ -28,7 +30,7 @@ public class ObiectKey extends Entity {
         coliziune.height = 32;
         SolidDefaultX=coliziune.x;
         SolidDefaultY=coliziune.y;
-}
+    }
 
     public  void draw(Graphics2D g){
         int screenX = Worldx - gp.player.Worldx + gp.player.screenX;//Calculam coordonatele obiectului pe ecran

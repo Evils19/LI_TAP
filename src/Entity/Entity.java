@@ -48,8 +48,8 @@ public boolean  Krit=false;
     public  int Power=1;
     public  int  Lvl;
     public  int KritPower=20;
-    public  int  Exp;
-    public int NextLvlExp;
+    public  int  Exp=0;
+    public int NextLvlExp=10;
     public  int Coin;
     public Entity CurentWeapon;
     public Entity CurentShield;
@@ -67,6 +67,14 @@ public boolean  Krit=false;
    protected   int sprintnum2=0;
    protected int sprinterCoutner2=0;
    public  int type;//0=player,1=NPC,2=Obiecte,3=Monstr
+   public  int type_player=0;
+    public  int type_npc=1;
+    public  int type_obj=2;
+    public  int type_monstr=3;
+    public  int type_Sword=4;
+    public  int type_Shield=5;
+    public  int type_Axe=6;
+    public  int type_Consumable=7;
 
 
 
@@ -204,7 +212,7 @@ objectImage=image;
         }
 
 
-if (gp.dc.ColiziunePlayer(this) && type==3){
+if (gp.dc.ColiziunePlayer(this) && type==type_monstr){
 
 
 
@@ -327,6 +335,24 @@ if (gp.dc.ColiziunePlayer(this) && type==3){
             collision=true;
             if (Isplayer){
                 gp.player.Life--;
+                direction=DirectionInverso(gp.player.direction);
+
+                if (gp.player.Life<=0){
+                   gp.player.Dead();
+
+                   Exp+=gp.player.Exp;
+                    if (Exp>=NextLvlExp){
+                        Lvl++;
+                        Exp=Exp-NextLvlExp;
+                        NextLvlExp+=NextLvlExp+(NextLvlExp*NextLvlExp)/50;
+                        MaxLife+=2;
+                        Power+=10;
+                        Defance+=1;
+                        gp.ui.addMesage("Moster Lvl Up");
+
+                    }
+
+                }
             }
 
 
@@ -392,9 +418,9 @@ public  void DyingAnimation(Graphics2D g2d){
 
         int Rand = rand.nextInt(20);
 
-        if (Rand > 10 && ActionAtack) {
+        if (Rand >= 16 && ActionAtack) {
 
-            int AtackKrit = rand.nextInt(100);
+            int AtackKrit = rand.nextInt(20,100);
 
 
             tempPower = AtackKrit;
@@ -413,6 +439,9 @@ public  void DyingAnimation(Graphics2D g2d){
         return tempPower;
     }
 
+
+
+    public  void Consumable(Entity entity){}
 
 
 }
